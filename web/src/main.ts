@@ -5,6 +5,9 @@ import { DNO_NAMES, type DnoId, type DnoStatus, type Outage } from '../../packag
 const API = import.meta.env.VITE_API_BASE ?? '';
 const STYLE = (dark: boolean) => `https://tiles.openfreemap.org/styles/${dark ? 'dark' : 'positron'}`;
 const darkMq = matchMedia('(prefers-color-scheme: dark)');
+// theme: follows the system until the visitor uses the switch, then their choice is remembered
+const savedTheme = (): 'light' | 'dark' | null => { try { const t = localStorage.getItem('theme'); return t === 'light' || t === 'dark' ? t : null; } catch { return null; } };
+const isDark = () => (savedTheme() ?? (darkMq.matches ? 'dark' : 'light')) === 'dark';
 
 interface Now { generatedAt: string; outages: Outage[]; status: Partial<Record<DnoId, DnoStatus>> }
 interface TimelinePoint { t: string; snap: string; customers: number; count: number }
@@ -37,7 +40,7 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, props: Partial<HTMLEl
 
 // ---- map -------------------------------------------------------------------------------------
 const map = new maplibregl.Map({
-  container: 'map', style: STYLE(darkMq.matches), center: [-2.5, 54.3], zoom: 5, minZoom: 4, maxZoom: 16,
+  container: 'map', style: STYLE(isDark()), center: [-2.5, 54.3], zoom: 5, minZoom: 4, maxZoom: 16,
   attributionControl: { compact: true },
 });
 // keep the canvas in step with its container (layout shifts as the header wraps / fonts load)
@@ -81,7 +84,19 @@ function renderMap() {
 }
 
 map.on('style.load', () => { installLayers(); renderMap(); });
-darkMq.addEventListener('change', (e) => map.setStyle(STYLE(e.matches)));
+const themeBtn = $('theme') as HTMLButtonElement;
+function syncThemeButton() {
+  const label = isDark() ? 'Switch to light mode' : 'Switch to dark mode';
+  themeBtn.setAttribute('aria-label', label); themeBtn.title = label;
+}
+syncThemeButton();
+themeBtn.addEventListener('click', () => {
+  const next = isDark() ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('theme', next); } catch { /* private mode: still works for this visit */ }
+  syncThemeButton(); map.setStyle(STYLE(next === 'dark'));
+});
+darkMq.addEventListener('change', () => { if (!savedTheme()) { syncThemeButton(); map.setStyle(STYLE(isDark())); } });
 
 map.on('click', 'clusters', async (e) => {
   const f = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })[0];
