@@ -265,10 +265,13 @@ $('pc-form').addEventListener('submit', async (e) => {
   }
 });
 
+const IDLE_LABEL = 'Customers off over time · drag to replay';
 // ---- history replay --------------------------------------------------------------------------
 function renderSpark() {
   const tl = state.timeline;
-  if (tl.length < 2) return;
+  // With only a few hours of history the chart is just a flat slab, so wait until there is a shape to show.
+  $('spark').classList.toggle('on', tl.length >= 12);
+  if (tl.length < 12) return;
   const max = Math.max(...tl.map((p) => p.customers), 1);
   const pts = tl.map((p, i) => `${(i / (tl.length - 1)) * 300},${28 - (p.customers / max) * 26}`);
   $('spark').innerHTML = `<path d="M0,28 L${pts.join(' L')} L300,28 Z"></path>`; // numeric data only
@@ -311,7 +314,7 @@ async function backToLive() {
   state.replay = false;
   $('replay').classList.remove('active');
   $('live').hidden = true;
-  $('replay-label').textContent = 'Last 7 days';
+  $('replay-label').textContent = IDLE_LABEL;
   ($('slider') as HTMLInputElement).value = ($('slider') as HTMLInputElement).max;
   await load();
 }
