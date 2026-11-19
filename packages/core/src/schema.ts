@@ -52,4 +52,4 @@ export interface FetchOpts {
   timeoutMs?: number;
 }
 
-export const USER_AGENT = 'uk-powercut-map/0.1 (open-source; https://github.com/OWNER/uk-power-cut-map)';
+export const USER_AGENT = 'uk-powercut-map/0.1 (open-source; https://github.com/baronne/ukpowercuts)';

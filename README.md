@@ -55,7 +55,7 @@ Cloudflare has no hard spending cap on R2, so the design keeps usage far inside 
 - Snapshots are pruned after 7 days; daily exports are small.
 - Also set a Cloudflare billing alert (Notifications, usage-based billing) and consider a card with a low limit.
 
-Before launch: replace `OWNER` in `packages/core/src/schema.ts` and `web/index.html` with the real repo URL, and ask SSEN / NIE about reuse terms.
+Before launch: ask SSEN / NIE / Northern Powergrid about reuse terms (SSEN and NIE are kept out of the bulk exports until they confirm).
 
 ## Support
 
