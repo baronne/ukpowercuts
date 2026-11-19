@@ -3,6 +3,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { DNO_NAMES, type DnoId, type DnoStatus, type Outage } from '../../packages/core/src/schema.ts';
 
 const API = import.meta.env.VITE_API_BASE ?? '';
+// optional tip jar: only https links are accepted, and nothing is shown when unset
+const KOFI = /^https:\/\//.test(import.meta.env.VITE_KOFI_URL ?? '') ? import.meta.env.VITE_KOFI_URL! : '';
 const STYLE = (dark: boolean) => `https://tiles.openfreemap.org/styles/${dark ? 'dark' : 'positron'}`;
 const darkMq = matchMedia('(prefers-color-scheme: dark)');
 // theme: follows the system until the visitor uses the switch, then their choice is remembered
@@ -183,6 +185,14 @@ const km = (a: [number, number], b: [number, number]) => {
   return 12742 * Math.asin(Math.sqrt(h));
 };
 
+function tipLink(text: string) {
+  const a = document.createElement('a');
+  a.href = KOFI; a.target = '_blank'; a.rel = 'noopener'; a.textContent = text;
+  return a;
+}
+const footerTip = $('tip-footer');
+if (KOFI) { footerTip.append(' · ', tipLink('☕ Support this map')); } else { footerTip.hidden = true; }
+
 $('pc-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const box = $('pc-result');
@@ -206,6 +216,12 @@ $('pc-form').addEventListener('submit', async (e) => {
     } else {
       box.className = 'good';
       box.textContent = `No reported outages within 3 km of ${result.postcode}. If your power is off, call 105 (free) and check your fuse board first.`;
+      if (KOFI) { // only in the all-clear case, never next to an outage
+        const tip = document.createElement('div');
+        tip.className = 'tip';
+        tip.append('Found this useful? It is free and open source. ', tipLink('Buy the maintainer a coffee'));
+        box.append(tip);
+      }
     }
   } catch {
     box.className = 'bad';

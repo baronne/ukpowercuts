@@ -49,6 +49,10 @@ VITE_API_BASE=https://<your-worker>.workers.dev npm run build:web   # then deplo
 
 Before launch: replace `OWNER` in `packages/core/src/schema.ts` and `web/index.html` with the real repo URL, and ask SSEN / NIE about reuse terms.
 
+## Support
+
+The map and data are free and always will be: no ads, no paywalls. If it helped you, you can [buy the maintainer a coffee](https://ko-fi.com/yourname) towards hosting and the domain. To show the tip link on your own deployment, build with `VITE_KOFI_URL=https://ko-fi.com/<name>`; with it unset, no tip UI appears.
+
 ## Licence
 
 MIT. Outage data remains the property of, and is licensed by, each network operator.

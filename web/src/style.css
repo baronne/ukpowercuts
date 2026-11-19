@@ -32,6 +32,7 @@ button:hover { border-color: var(--accent); }
   :root:not([data-theme="light"]) #theme .i-moon { display: none; }
 }
 #pc-result { padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); }
+.tip { margin-top: 4px; font-size: 12.5px; color: var(--muted); }
 #pc-result.bad { border-color: var(--unplanned); }
 #pc-result.good { border-color: var(--ok); }
 .chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
