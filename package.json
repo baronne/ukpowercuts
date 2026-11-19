@@ -1,0 +1,22 @@
+{
+  "name": "uk-power-cut-map",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "workspaces": ["packages/*", "worker", "web"],
+  "scripts": {
+    "test": "vitest run",
+    "probe": "tsx scripts/probe.ts",
+    "typecheck": "tsc -b --noEmit false || tsc --noEmit -p packages/core",
+    "dev:worker": "npm run dev -w worker",
+    "dev:web": "npm run dev -w web",
+    "build:web": "npm run build -w web"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.8"
+  }
+}

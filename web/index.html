@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>UK Power Cuts – live map of every network</title>
+  <meta name="description" content="Open-source live map of power cuts across all UK electricity networks, with 7 days of history and open data." />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand"><h1>UK Power Cuts</h1><span id="updated" class="muted">Loading…</span></div>
+    <div class="totals"><strong id="t-customers">–</strong> <span class="muted">customers off</span> · <strong id="t-count">–</strong> <span class="muted">power cuts</span></div>
+    <form id="pc-form" role="search"><input id="pc" type="search" placeholder="Check a postcode, e.g. SW1A 1AA" autocomplete="postal-code" aria-label="Postcode" /><button>Check</button></form>
+    <div id="pc-result" role="status" hidden></div>
+    <div class="chips" id="filters"></div>
+  </header>
+  <main>
+    <div id="map" aria-label="Map of UK power cuts"></div>
+    <button id="sheet-toggle" aria-expanded="false">List</button>
+    <aside id="panel" aria-label="Outage list"><ol id="list"></ol></aside>
+  </main>
+  <section id="replay" aria-label="History replay">
+    <button id="live" hidden>Back to live</button>
+    <label for="slider" id="replay-label">Last 7 days</label>
+    <svg id="spark" viewBox="0 0 300 28" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <input id="slider" type="range" min="0" max="0" value="0" disabled />
+  </section>
+  <footer>
+    <span>Data from each network's open data feed (UKPN, NGED, SSEN, SPEN, Northern Powergrid, ENWL, NIE Networks). Faults affecting very few customers may be missing.</span>
+    <span><a href="/exports/" id="exports-link">Open data</a> · <a href="https://github.com/OWNER/uk-power-cut-map">Source (MIT)</a> · Map © <a href="https://openfreemap.org">OpenFreeMap</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Postcode lookups via <a href="https://postcodes.io">postcodes.io</a> · <strong>Not an official source. In an emergency call 105.</strong></span>
+  </footer>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

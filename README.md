@@ -1,0 +1,54 @@
+# UK Power Cuts
+
+An open-source, single live map of power cuts across **every** UK electricity network (UKPN, NGED, SSEN, SPEN, Northern Powergrid, Electricity North West, NIE Networks), with 7 days of history and a daily open dataset. Born from a thread on r/UKPreppers asking for exactly this.
+
+> Not an official source. If your power is off, call **105** (free).
+
+## How it works
+
+- `packages/core` – one adapter per network that normalises its public feed into a single `Outage` shape (pure functions, tested against recorded real responses in `test/fixtures`).
+- `worker` – Cloudflare Worker. A cron every 5 minutes polls all feeds, writes `latest.json` plus a gzipped snapshot to R2, and updates a rolling 7-day history. Hourly it adds a timeline point, prunes old snapshots and (at 00:xx UTC) writes the previous day's export. If a feed fails, its last good data is carried forward and flagged stale.
+- `web` – static MapLibre GL JS app (OpenFreeMap tiles, no API key), postcode check via postcodes.io, 7-day replay slider.
+
+API (CORS open): `/api/now.json`, `/api/status.json`, `/api/timeline.json`, `/api/history.json`, `/api/snapshot/YYYY-MM-DD/HHMM`, `/exports/`.
+
+## Develop
+
+```bash
+npm install
+npm test                 # adapter + history tests
+npm run probe            # fetch every live feed once, refresh fixtures, print field summary
+npm run dev:worker       # Worker on :8787  (then: curl localhost:8787/__poll)
+npm run dev:web          # map on :5173, proxies /api to the Worker
+```
+
+## Data sources
+
+| Network | Source | Key |
+|---|---|---|
+| UKPN | Opendatasoft `ukpn-live-faults` + `ukpn-national-energy-outage` (CC BY 4.0) | no |
+| NGED | CKAN `connecteddata.nationalgrid.co.uk` Live Detailed Power Cuts | no |
+| SSEN | `…/opendataportal-prd/v4/api/getallfaults` | no |
+| Northern Powergrid | Opendatasoft `live-power-cuts-data` | no |
+| NIE Networks | `powercheck.nienetworks.co.uk` faults API (Irish Grid coordinates, converted) | no |
+| SPEN | Opendatasoft `distribution-network-live-outages` (CC BY 4.0) | **free account** |
+| Electricity North West | Opendatasoft `live_incidents` (CC BY 4.0) | **free account** |
+
+Known limits: UKPN and ENWL omit very small faults; SPEN publishes no customer counts; SSEN and NIE state no licence, so they are shown live with attribution but left out of the bulk daily exports (`EXPORT_EXCLUDE`) until confirmed.
+
+## Deploy (Cloudflare)
+
+```bash
+npx wrangler login
+npx wrangler r2 bucket create uk-powercut-map
+npx wrangler secret put SPEN_KEY --config worker/wrangler.toml   # optional, enables SPEN
+npx wrangler secret put ENWL_KEY --config worker/wrangler.toml   # optional, enables ENWL
+npm run deploy -w worker
+VITE_API_BASE=https://<your-worker>.workers.dev npm run build:web   # then deploy web/dist to Cloudflare Pages
+```
+
+Before launch: replace `OWNER` in `packages/core/src/schema.ts` and `web/index.html` with the real repo URL, and ask SSEN / NIE about reuse terms.
+
+## Licence
+
+MIT. Outage data remains the property of, and is licensed by, each network operator.

@@ -1,0 +1,520 @@
+{
+ "escalationInfo": {
+  "escalated": 0,
+  "escalationMessage": "Due to essential maintenance being carried out on other systems today, updates to Powercheck may be delayed. To get the most up-to-date information on your fault please call us on 03457 643 643 or report your power cut online."
+ },
+ "outageMessage": [
+  {
+   "outageId": "5951189",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "284461.22220000,399889.82442400"
+   },
+   "startTime": "5:16 PM, 18 Nov",
+   "estRestoreTime": "Not available - Update to follow",
+   "estRestoreFullDateTime": "Not available - Update to follow",
+   "postCode": "BT46 5",
+   "fullPostCodes": "BT46 5",
+   "numCustAffected": "1",
+   "statusMessage": "Our repair team has arrived and is assessing the problem.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951612",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "238988.20158700,409504.77713300"
+   },
+   "startTime": "8:17 AM, 19 Nov",
+   "estRestoreTime": "11:30 AM, 19 Nov",
+   "estRestoreFullDateTime": "11:30 AM, 19 Nov 2026",
+   "postCode": "BT82 0",
+   "fullPostCodes": "BT82 0",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35198",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "285918.07301500,422557.80215500"
+   },
+   "startTime": "8:18 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT51 4",
+   "fullPostCodes": "BT51 4",
+   "numCustAffected": "21",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35041",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "284887.63902900,358579.20852200"
+   },
+   "startTime": "8:25 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT71 6 ;BT71 7",
+   "fullPostCodes": "BT71 6 ;BT71 7",
+   "numCustAffected": "37",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35320",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "336250.05032300,359434.10838900"
+   },
+   "startTime": "8:32 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT27 6",
+   "fullPostCodes": "BT27 6",
+   "numCustAffected": "4",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35412",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "226976.00000000,323950.32700000"
+   },
+   "startTime": "8:38 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT92 9",
+   "fullPostCodes": "BT92 9",
+   "numCustAffected": "3",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35291",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "257484.13073800,376599.48383500"
+   },
+   "startTime": "8:42 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT79 9",
+   "fullPostCodes": "BT79 9",
+   "numCustAffected": "30",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35272",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "233148.79086100,384104.63701400"
+   },
+   "startTime": "8:45 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT81 7",
+   "fullPostCodes": "BT81 7",
+   "numCustAffected": "44",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35152",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "230342.45033600,356734.53924400"
+   },
+   "startTime": "8:52 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT78 3",
+   "fullPostCodes": "BT78 3",
+   "numCustAffected": "8",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35136",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "329279.00000000,364403.00000000"
+   },
+   "startTime": "8:53 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT27 5",
+   "fullPostCodes": "BT27 5",
+   "numCustAffected": "15",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35215",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "194908.59985100,359122.36617800"
+   },
+   "startTime": "8:55 AM, 19 Nov",
+   "estRestoreTime": "6:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "6:00 PM, 19 Nov 2026",
+   "postCode": "BT93 3",
+   "fullPostCodes": "BT93 3",
+   "numCustAffected": "6",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951629",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "257257.68931800,375534.89046300"
+   },
+   "startTime": "8:57 AM, 19 Nov",
+   "estRestoreTime": "12:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "12:00 PM, 19 Nov 2026",
+   "postCode": "BT79 9",
+   "fullPostCodes": "BT79 9",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35371",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "303151.06738500,394922.38526600"
+   },
+   "startTime": "8:58 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT41 3",
+   "fullPostCodes": "BT41 3",
+   "numCustAffected": "14",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35150",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "288588.44657400,391064.60232100"
+   },
+   "startTime": "9:02 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT45 5 ;BT45 8",
+   "fullPostCodes": "BT45 5 ;BT45 8",
+   "numCustAffected": "92",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35110",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "314369.39887500,325249.18358200"
+   },
+   "startTime": "9:05 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT34 2",
+   "fullPostCodes": "BT34 2",
+   "numCustAffected": "1",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35312",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "322328.66035900,353988.59217600"
+   },
+   "startTime": "9:21 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT25 1",
+   "fullPostCodes": "BT25 1",
+   "numCustAffected": "6",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/34938",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "298345.54697200,425211.82407700"
+   },
+   "startTime": "9:21 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT53 7 ;BT53 8",
+   "fullPostCodes": "BT53 7 ;BT53 8",
+   "numCustAffected": "101",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35295",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "325085.57815400,346563.64737100"
+   },
+   "startTime": "9:28 AM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT25 2",
+   "fullPostCodes": "BT25 2",
+   "numCustAffected": "43",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951647",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "336636.25000000,376192.00000000"
+   },
+   "startTime": "9:30 AM, 19 Nov",
+   "estRestoreTime": "1:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "1:00 PM, 19 Nov 2026",
+   "postCode": "BT4 1 ;BT5 4",
+   "fullPostCodes": "BT4 1 ;BT5 4",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951650",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "313490.86508100,362146.20248400"
+   },
+   "startTime": "9:48 AM, 19 Nov",
+   "estRestoreTime": "1:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "1:00 PM, 19 Nov 2026",
+   "postCode": "BT67 0",
+   "fullPostCodes": "BT67 0",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951651",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "307127.66132000,351831.19679100"
+   },
+   "startTime": "9:49 AM, 19 Nov",
+   "estRestoreTime": "1:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "1:00 PM, 19 Nov 2026",
+   "postCode": "BT63 5",
+   "fullPostCodes": "BT63 5",
+   "numCustAffected": "2",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "The fault is due to equipment failure.",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951652",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "305875.86383500,405944.37021100"
+   },
+   "startTime": "9:52 AM, 19 Nov",
+   "estRestoreTime": "1:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "1:00 PM, 19 Nov 2026",
+   "postCode": "BT42 1 ;BT43 5",
+   "fullPostCodes": "BT42 1 ;BT43 5",
+   "numCustAffected": "1",
+   "statusMessage": "We have logged a fault for this area and will be assigning a repair team as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951657",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "268819.79701100,421988.56048200"
+   },
+   "startTime": "10:26 AM, 19 Nov",
+   "estRestoreTime": "1:30 PM, 19 Nov",
+   "estRestoreFullDateTime": "1:30 PM, 19 Nov 2026",
+   "postCode": "BT49 0",
+   "fullPostCodes": "BT49 0",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951667",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "254182.53623400,372911.48061800"
+   },
+   "startTime": "10:48 AM, 19 Nov",
+   "estRestoreTime": "2:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "2:00 PM, 19 Nov 2026",
+   "postCode": "BT79 9",
+   "fullPostCodes": "BT79 9",
+   "numCustAffected": "1",
+   "statusMessage": "We have logged a fault for this area and will be assigning a repair team as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951668",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "331718.08320300,368606.76538300"
+   },
+   "startTime": "10:52 AM, 19 Nov",
+   "estRestoreTime": "2:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "2:00 PM, 19 Nov 2026",
+   "postCode": "BT9 5 ;BT9 6",
+   "fullPostCodes": "BT9 5 ;BT9 6",
+   "numCustAffected": "10",
+   "statusMessage": "Our repair team has arrived and is assessing the problem.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951669",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "335024.38859300,361272.89308100"
+   },
+   "startTime": "10:48 AM, 19 Nov",
+   "estRestoreTime": "2:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "2:00 PM, 19 Nov 2026",
+   "postCode": "BT27 6",
+   "fullPostCodes": "BT27 6",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951674",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "319395.50313500,372517.92570600"
+   },
+   "startTime": "10:57 AM, 19 Nov",
+   "estRestoreTime": "2:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "2:00 PM, 19 Nov 2026",
+   "postCode": "BT29 4",
+   "fullPostCodes": "BT29 4",
+   "numCustAffected": "1",
+   "statusMessage": "We have logged a fault for this area and will be assigning a repair team as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951680",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "341722.48626700,389115.95135500"
+   },
+   "startTime": "11:28 AM, 19 Nov",
+   "estRestoreTime": "2:30 PM, 19 Nov",
+   "estRestoreFullDateTime": "2:30 PM, 19 Nov 2026",
+   "postCode": "BT38 7",
+   "fullPostCodes": "BT38 7",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951684",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "361223.79715900,365447.67939500"
+   },
+   "startTime": "11:52 AM, 19 Nov",
+   "estRestoreTime": "3:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "3:00 PM, 19 Nov 2026",
+   "postCode": "BT22 2",
+   "fullPostCodes": "BT22 2",
+   "numCustAffected": "1",
+   "statusMessage": "A repair team has been assigned and will be on its way as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951688",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "243187.85429600,370886.24109100"
+   },
+   "startTime": "12:02 PM, 19 Nov",
+   "estRestoreTime": "3:30 PM, 19 Nov",
+   "estRestoreFullDateTime": "3:30 PM, 19 Nov 2026",
+   "postCode": "BT78 1 ;BT78 2 ;BT78 5",
+   "fullPostCodes": "BT78 1 ;BT78 2 ;BT78 5",
+   "numCustAffected": "148",
+   "statusMessage": "The repair team is working to resolve the problem.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "5951698",
+   "outageType": "Fault",
+   "point": {
+    "coordinates": "310007.96999700,355749.20501900"
+   },
+   "startTime": "12:46 PM, 19 Nov",
+   "estRestoreTime": "4:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "4:00 PM, 19 Nov 2026",
+   "postCode": "BT66 7",
+   "fullPostCodes": "BT66 7",
+   "numCustAffected": "1",
+   "statusMessage": "We have logged a fault for this area and will be assigning a repair team as soon as possible.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  },
+  {
+   "outageId": "2026/35345",
+   "outageType": "Planned",
+   "point": {
+    "coordinates": "338703.68124200,362609.69924700"
+   },
+   "startTime": "1:02 PM, 19 Nov",
+   "estRestoreTime": "5:00 PM, 19 Nov",
+   "estRestoreFullDateTime": "5:00 PM, 19 Nov 2026",
+   "postCode": "BT24 7",
+   "fullPostCodes": "BT24 7",
+   "numCustAffected": "45",
+   "statusMessage": "We are carrying out essential planned maintenance to the electricity network in your area.",
+   "causeMessage": "",
+   "updatedTimeStamp": "1:27 PM, 19 Nov"
+  }
+ ]
+}
