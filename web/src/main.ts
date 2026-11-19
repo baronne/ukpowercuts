@@ -130,22 +130,37 @@ function openPopup(o: Outage) {
 }
 
 // ---- UI --------------------------------------------------------------------------------------
+const SHORT: Record<DnoId, string> = { ukpn: 'UKPN', nged: 'NGED', ssen: 'SSEN', spen: 'SPEN', npg: 'NPg', enwl: 'ENWL', nie: 'NIE' };
+const FULL_NAME: Record<DnoId, string> = { ...DNO_NAMES, ssen: 'Scottish and Southern Electricity Networks' };
+const REGION: Record<DnoId, string> = {
+  ukpn: 'London, the South East and East of England',
+  nged: 'Midlands, South West England and South Wales',
+  ssen: 'North of Scotland and central southern England',
+  spen: 'Central and southern Scotland, Merseyside, Cheshire and North Wales',
+  npg: 'North East England and Yorkshire',
+  enwl: 'North West England',
+  nie: 'Northern Ireland',
+};
+
 function renderChips() {
   const box = $('filters');
   box.replaceChildren();
-  const chip = (label: string, pressed: boolean, swatch: string, onClick: () => void, title = '') => {
-    const b = el('button', { class: 'chip', title }, el('span', { class: `dot ${swatch}` }), label);
+  const chip = (label: string, pressed: boolean, swatch: string, onClick: () => void, tip: string) => {
+    const b = el('button', { class: 'chip', type: 'button' }, el('span', { class: `dot ${swatch}` }), label);
+    b.dataset.tip = tip; // shown instantly by CSS on hover / keyboard focus
+    b.setAttribute('aria-label', `${label}: ${tip.replace(/\n/g, ', ')}`);
     b.setAttribute('aria-pressed', String(pressed));
     b.addEventListener('click', onClick);
     box.append(b);
   };
-  chip('Unplanned', state.showUnplanned, 'sw-unplanned', () => { state.showUnplanned = !state.showUnplanned; refresh(); });
-  chip('Planned work', state.showPlanned, 'sw-planned', () => { state.showPlanned = !state.showPlanned; refresh(); });
+  chip('Unplanned', state.showUnplanned, 'sw-unplanned', () => { state.showUnplanned = !state.showUnplanned; refresh(); }, 'Unexpected power cuts\nClick to show or hide');
+  chip('Planned work', state.showPlanned, 'sw-planned', () => { state.showPlanned = !state.showPlanned; refresh(); }, 'Scheduled maintenance\nClick to show or hide');
+  box.append(el('span', { class: 'chip-sep' }));
   for (const id of Object.keys(DNO_NAMES) as DnoId[]) {
     const s = state.status[id];
     const cls = !s ? '' : s.stale ? 'stale' : s.ok ? 'ok' : '';
-    const tip = !s ? 'No data yet' : s.ok ? `${DNO_NAMES[id]}: updated ${ago(s.fetchedAt)}` : `${DNO_NAMES[id]}: ${/not configured/.test(s.error ?? '') ? 'not connected yet' : `feed unavailable, showing data from ${ago(s.fetchedAt)}`}`;
-    chip(id.toUpperCase(), state.dnos.has(id), cls, () => { state.dnos.has(id) ? state.dnos.delete(id) : state.dnos.add(id); refresh(); }, tip);
+    const health = !s ? 'No data yet' : s.ok ? `Updated ${ago(s.fetchedAt)}` : /not configured/.test(s.error ?? '') ? 'Not connected yet' : `Feed unavailable, showing data from ${ago(s.fetchedAt)}`;
+    chip(SHORT[id], state.dnos.has(id), cls, () => { state.dnos.has(id) ? state.dnos.delete(id) : state.dnos.add(id); refresh(); }, `${FULL_NAME[id]}\n${REGION[id]}\n${health}`);
   }
 }
 
@@ -154,7 +169,7 @@ function renderList() {
   $('list').replaceChildren(...list.map((o) => {
     const li = el('li', { tabIndex: 0 },
       el('div', { class: 'row' }, el('span', {}, o.postcodes[0] ?? DNO_NAMES[o.dno]), el('span', { class: 'n' }, o.customers !== undefined ? fmt.format(o.customers) : '–')),
-      el('div', { class: 'sub' }, `${o.type === 'planned' ? 'Planned' : 'Unplanned'} · ${o.dno.toUpperCase()}${o.etr ? ` · back ~${when(o.etr)}` : ''}`));
+      el('div', { class: 'sub' }, `${o.type === 'planned' ? 'Planned' : 'Unplanned'} · ${SHORT[o.dno]}${o.etr ? ` · back ~${when(o.etr)}` : ''}`));
     const go = () => { map.flyTo({ center: [o.lon, o.lat], zoom: Math.max(map.getZoom(), 11) }); openPopup(o); document.body.classList.remove('sheet'); $('panel').classList.remove('open'); };
     li.addEventListener('click', go);
     li.addEventListener('keydown', (e) => e.key === 'Enter' && go());
@@ -166,8 +181,14 @@ function renderTotals() {
   const live = visible().filter((o) => o.type === 'unplanned');
   $('t-customers').textContent = fmt.format(live.reduce((s, o) => s + (o.customers ?? 0), 0));
   $('t-count').textContent = fmt.format(live.length);
-  const stale = Object.values(state.status).some((s) => s?.stale && !/not configured/.test(s.error ?? ''));
-  $('updated').textContent = state.replay ? 'Replaying history' : state.generatedAt ? `Updated ${ago(state.generatedAt)}${stale ? ' · some feeds delayed' : ''}` : '';
+  const delayed = Object.values(state.status).filter((s) => s?.stale && !/not configured/.test(s.error ?? '')).length;
+  setFreshness(state.replay ? 'replay' : delayed ? 'stale' : 'live',
+    state.replay ? 'Replaying history' : state.generatedAt ? `Updated ${ago(state.generatedAt)}${delayed ? ` · ${delayed} feed${delayed > 1 ? 's' : ''} delayed` : ''}` : '');
+}
+
+function setFreshness(kind: 'live' | 'stale' | 'replay' | 'error', text: string) {
+  $('freshness').dataset.state = kind;
+  $('updated').textContent = text;
 }
 
 function refresh() { renderChips(); renderMap(); renderList(); renderTotals(); }
@@ -192,14 +213,27 @@ function tipLink(text: string) {
 }
 ($('exports-link') as HTMLAnchorElement).href = `${API}/exports/`; // data lives on the Worker, not on the static site
 const footerTip = $('tip-footer');
-if (KOFI) { footerTip.append(' · ', tipLink('☕ Support this map')); } else { footerTip.hidden = true; }
+if (KOFI) { footerTip.append(tipLink('☕ Support running costs')); } else { footerTip.hidden = true; }
+
+const box = $('pc-result');
+function showResult(kind: '' | 'good' | 'bad', title: string, detail = '', extra?: Node) {
+  const close = el('button', { type: 'button', class: 'close', ariaLabel: 'Close' }, '×');
+  close.addEventListener('click', hideResult);
+  const body = el('div', { class: 'res-body' }, el('strong', {}, title));
+  if (detail) body.append(el('span', {}, detail));
+  if (extra) body.append(extra);
+  box.className = kind; box.hidden = false;
+  box.replaceChildren(el('span', { class: 'res-icon' }, kind === 'good' ? '✓' : kind === 'bad' ? '!' : '…'), body, close);
+}
+function hideResult() { box.hidden = true; box.replaceChildren(); }
+$('pc').addEventListener('input', (e) => { if (!(e.target as HTMLInputElement).value) hideResult(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) hideResult(); });
 
 $('pc-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const box = $('pc-result');
   const pc = ($('pc') as HTMLInputElement).value.trim();
-  if (!pc) return;
-  box.hidden = false; box.className = ''; box.textContent = 'Looking up…';
+  if (!pc) { ($('pc') as HTMLInputElement).focus(); return; }
+  showResult('', 'Checking…');
   try {
     const res = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(pc)}`);
     if (!res.ok) throw new Error('not found');
@@ -209,24 +243,21 @@ $('pc-form').addEventListener('submit', async (e) => {
     const exact = near.find((o) => o.postcodes.some((p) => p.replace(/\s/g, '').toUpperCase() === pc.replace(/\s/g, '').toUpperCase()));
     map.flyTo({ center: [here[1], here[0]], zoom: 12 });
     if (exact) {
-      box.className = 'bad';
-      box.textContent = `Yes: a ${exact.type === 'planned' ? 'planned outage' : 'power cut'} lists ${result.postcode}${exact.etr ? `, estimated back ${when(exact.etr)}` : ''}. Reported by ${DNO_NAMES[exact.dno]}.`;
+      showResult('bad', `${exact.type === 'planned' ? 'Planned work' : 'Power cut'} affecting ${result.postcode}`,
+        `${exact.etr ? `Estimated back ${when(exact.etr)}. ` : ''}Reported by ${DNO_NAMES[exact.dno]}.`);
     } else if (near.length) {
-      box.className = 'bad';
-      box.textContent = `Nothing lists ${result.postcode} directly, but ${near.length} outage${near.length > 1 ? 's' : ''} within 3 km (nearest ${km(here, [near[0]!.lat, near[0]!.lon]).toFixed(1)} km, ${DNO_NAMES[near[0]!.dno]}).`;
+      showResult('bad', `${near.length} outage${near.length > 1 ? 's' : ''} within 3 km of ${result.postcode}`,
+        `None lists your postcode directly. Nearest is ${km(here, [near[0]!.lat, near[0]!.lon]).toFixed(1)} km away (${DNO_NAMES[near[0]!.dno]}).`);
     } else {
-      box.className = 'good';
-      box.textContent = `No reported outages within 3 km of ${result.postcode}. If your power is off, call 105 (free) and check your fuse board first.`;
+      let tip: HTMLElement | undefined;
       if (KOFI) { // only in the all-clear case, never next to an outage
-        const tip = document.createElement('div');
-        tip.className = 'tip';
-        tip.append('Found this useful? It is free and open source. ', tipLink('Buy the maintainer a coffee'));
-        box.append(tip);
+        tip = el('span', { class: 'tip' }, 'Found this useful? ', tipLink('Buy me a coffee'), ' to help cover running costs.');
       }
+      showResult('good', `No reported power cuts near ${result.postcode}`,
+        'If your power is off, check your fuse box first, then call 105 (free).', tip);
     }
   } catch {
-    box.className = 'bad';
-    box.textContent = 'Postcode not recognised.';
+    showResult('bad', 'Postcode not recognised', 'Check it and try again, e.g. SW1A 1AA.');
   }
 });
 
@@ -288,7 +319,7 @@ async function load() {
     const now: Now = await (await fetch(`${API}/api/now.json`)).json();
     state.outages = now.outages; state.status = now.status; state.generatedAt = now.generatedAt;
   } catch {
-    $('updated').textContent = 'Could not load data: retrying…';
+    setFreshness('error', 'Could not load data, retrying…');
     return;
   }
   refresh();
