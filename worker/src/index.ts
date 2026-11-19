@@ -11,6 +11,7 @@ function withCors(req: Request, env: Env, res: Response): Response {
   // letting the runtime compress them a second time.
   const out = new Response(res.body, { status: res.status, headers: res.headers, encodeBody: res.headers.has('Content-Encoding') ? 'manual' : 'automatic' });
   out.headers.append('Vary', 'Origin');
+  out.headers.set('X-Robots-Tag', 'noindex'); // keep raw JSON out of search results
   if (origin && allowed.includes(origin)) {
     out.headers.set('Access-Control-Allow-Origin', origin);
     out.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');

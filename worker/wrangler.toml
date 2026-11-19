@@ -2,6 +2,9 @@ name = "uk-powercut-map"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
 
+# Serve the API on the site's own domain (this route runs in front of the site's custom domain).
+routes = [{ pattern = "ukpowercuts.uk/api/*", zone_name = "ukpowercuts.uk" }]
+
 [triggers]
 crons = ["*/5 * * * *"]
 
@@ -13,8 +16,9 @@ bucket_name = "uk-powercut-map"
 # Optional var: EXPORT_EXCLUDE = "ssen,nie"  (DNOs left out of the bulk daily exports until licences are confirmed)
 [vars]
 EXPORT_EXCLUDE = "ssen,nie"
-# Only our own site may call the API from a browser (comma-separate to add a custom domain later).
-ALLOWED_ORIGINS = "https://uk-power-cut-map-web.baronne.workers.dev"
+# Only our own site may call the API from a browser (same-origin calls from ukpowercuts.uk need no CORS;
+# www and the old workers.dev address do).
+ALLOWED_ORIGINS = "https://ukpowercuts.uk,https://www.ukpowercuts.uk,https://uk-power-cut-map-web.baronne.workers.dev"
 # Daily exports keep being written to R2; set to "true" to serve them publicly at /exports/.
 PUBLIC_EXPORTS = "false"
 

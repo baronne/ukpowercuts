@@ -1,6 +1,6 @@
 # UK Power Cuts
 
-An open-source, single live map of power cuts across **every** UK electricity network (UKPN, NGED, SSEN, SPEN, Northern Powergrid, Electricity North West, NIE Networks), with 7 days of history. Born from a thread on r/UKPreppers asking for exactly this.
+An open-source, single live map of power cuts across **every** UK electricity network (UKPN, NGED, SSEN, SPEN, Northern Powergrid, Electricity North West, NIE Networks), with 7 days of history: **[ukpowercuts.uk](https://ukpowercuts.uk)**. Born from a thread on r/UKPreppers asking for exactly this.
 
 > Not an official source. If your power is off, call **105** (free).
 
@@ -44,7 +44,7 @@ npx wrangler r2 bucket create uk-powercut-map
 (cd worker && npx wrangler deploy)                                   # API + 5-minute cron
 npx wrangler secret put SPEN_KEY --config worker/wrangler.toml       # optional, enables SPEN
 npx wrangler secret put ENWL_KEY --config worker/wrangler.toml       # optional, enables ENWL
-VITE_API_BASE=https://<worker>.workers.dev VITE_KOFI_URL=https://ko-fi.com/<name> npm run build:web
+VITE_API_BASE=https://ukpowercuts.uk VITE_KOFI_URL=https://ko-fi.com/<name> npm run build:web
 (cd web && npx wrangler deploy)                                      # static site (Workers static assets)
 ```
 

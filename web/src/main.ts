@@ -211,6 +211,11 @@ function tipLink(text: string) {
   a.href = KOFI; a.target = '_blank'; a.rel = 'noopener'; a.textContent = text;
   return a;
 }
+// About & FAQ: the text lives in index.html so search engines can read it without running the app.
+const about = $('about') as HTMLDialogElement;
+$('about-open').addEventListener('click', () => about.showModal());
+about.addEventListener('click', (e) => { if (e.target === about) about.close(); }); // click on the backdrop closes it
+
 const footerTip = $('tip-footer');
 if (KOFI) { footerTip.append(tipLink('☕ Support running costs')); } else { footerTip.hidden = true; }
 
