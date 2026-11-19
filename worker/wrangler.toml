@@ -1,6 +1,8 @@
 name = "uk-powercut-map"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
+# Keep the old workers.dev address alive so existing links and the previous site build keep working.
+workers_dev = true
 
 # Serve the API on the site's own domain (this route runs in front of the site's custom domain).
 routes = [{ pattern = "ukpowercuts.uk/api/*", zone_name = "ukpowercuts.uk" }]
