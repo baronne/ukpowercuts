@@ -190,6 +190,7 @@ function tipLink(text: string) {
   a.href = KOFI; a.target = '_blank'; a.rel = 'noopener'; a.textContent = text;
   return a;
 }
+($('exports-link') as HTMLAnchorElement).href = `${API}/exports/`; // data lives on the Worker, not on the static site
 const footerTip = $('tip-footer');
 if (KOFI) { footerTip.append(' · ', tipLink('☕ Support this map')); } else { footerTip.hidden = true; }
 

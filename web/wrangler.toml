@@ -1,0 +1,7 @@
+# Static site (Workers static assets). Build first:
+#   VITE_API_BASE=https://<worker>.workers.dev VITE_KOFI_URL=https://ko-fi.com/<name> npm run build:web
+name = "uk-power-cut-map-web"
+compatibility_date = "2026-11-01"
+
+[assets]
+directory = "./dist"

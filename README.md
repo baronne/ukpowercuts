@@ -41,11 +41,19 @@ Known limits: UKPN and ENWL omit very small faults; SPEN publishes no customer c
 ```bash
 npx wrangler login
 npx wrangler r2 bucket create uk-powercut-map
-npx wrangler secret put SPEN_KEY --config worker/wrangler.toml   # optional, enables SPEN
-npx wrangler secret put ENWL_KEY --config worker/wrangler.toml   # optional, enables ENWL
-npm run deploy -w worker
-VITE_API_BASE=https://<your-worker>.workers.dev npm run build:web   # then deploy web/dist to Cloudflare Pages
+(cd worker && npx wrangler deploy)                                   # API + 5-minute cron
+npx wrangler secret put SPEN_KEY --config worker/wrangler.toml       # optional, enables SPEN
+npx wrangler secret put ENWL_KEY --config worker/wrangler.toml       # optional, enables ENWL
+VITE_API_BASE=https://<worker>.workers.dev VITE_KOFI_URL=https://ko-fi.com/<name> npm run build:web
+(cd web && npx wrangler deploy)                                      # static site (Workers static assets)
 ```
+
+### Keeping costs at zero
+Cloudflare has no hard spending cap on R2, so the design keeps usage far inside the free tier (10 GB, 1M Class A, 10M Class B per month):
+- Only the cron writes to R2 (about 26k writes a month). There is no public write path.
+- Public reads are answered from a short in-memory cache in the Worker, so R2 reads and list calls are bounded however much traffic arrives. Paths that cannot exist are rejected without touching R2.
+- Snapshots are pruned after 7 days; daily exports are small.
+- Also set a Cloudflare billing alert (Notifications, usage-based billing) and consider a card with a low limit.
 
 Before launch: replace `OWNER` in `packages/core/src/schema.ts` and `web/index.html` with the real repo URL, and ask SSEN / NIE about reuse terms.
 

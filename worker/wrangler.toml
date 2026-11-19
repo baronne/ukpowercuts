@@ -13,3 +13,9 @@ bucket_name = "uk-powercut-map"
 # Optional var: EXPORT_EXCLUDE = "ssen,nie"  (DNOs left out of the bulk daily exports until licences are confirmed)
 [vars]
 EXPORT_EXCLUDE = "ssen,nie"
+
+# Workers Logs: keep our own console.warn lines (a feed failing); skip per-request invocation logs so
+# public traffic can't inflate log volume.
+[observability.logs]
+enabled = true
+invocation_logs = false
