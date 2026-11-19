@@ -6,6 +6,10 @@ export interface Env {
   SPEN_KEY?: string;
   ENWL_KEY?: string;
   EXPORT_EXCLUDE?: string;
+  /** Comma-separated browser origins allowed to call the API (CORS). */
+  ALLOWED_ORIGINS?: string;
+  /** "true" serves the daily exports publicly at /exports/; otherwise they are written but not served. */
+  PUBLIC_EXPORTS?: string;
 }
 
 export interface Latest {

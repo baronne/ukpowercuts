@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest an idea that would make the map more useful
+title: "[Idea] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The map is deliberately simple and light, so it works on a phone with low battery and weak signal during a power cut. Ideas that keep it that way are the most likely to happen.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would you like to do that you can't today?
+      placeholder: e.g. "I'd like to be told when the power cut near me is fixed."
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How do you imagine it working? (optional)
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who would this help most?
+      options:
+        - People checking during a power cut
+        - People preparing for storms or outages
+        - Researchers, journalists or developers
+        - Someone else

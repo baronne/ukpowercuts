@@ -13,6 +13,10 @@ bucket_name = "uk-powercut-map"
 # Optional var: EXPORT_EXCLUDE = "ssen,nie"  (DNOs left out of the bulk daily exports until licences are confirmed)
 [vars]
 EXPORT_EXCLUDE = "ssen,nie"
+# Only our own site may call the API from a browser (comma-separate to add a custom domain later).
+ALLOWED_ORIGINS = "https://uk-power-cut-map-web.baronne.workers.dev"
+# Daily exports keep being written to R2; set to "true" to serve them publicly at /exports/.
+PUBLIC_EXPORTS = "false"
 
 # Workers Logs: keep our own console.warn lines (a feed failing); skip per-request invocation logs so
 # public traffic can't inflate log volume.

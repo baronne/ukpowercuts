@@ -1,0 +1,38 @@
+name: Data or API access
+description: Ask for access to the history or an API
+title: "[Data] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The live feeds come from each network's own open data portal, and you can use those directly. This project also keeps a short history and a combined feed. These aren't public yet, but tell us what you need and we'll gauge demand.
+  - type: textarea
+    id: need
+    attributes:
+      label: What data do you need?
+      placeholder: e.g. daily history for all networks as CSV, or a live combined JSON feed
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: What will you use it for?
+    validations:
+      required: true
+  - type: dropdown
+    id: how-often
+    attributes:
+      label: How often would you fetch it?
+      options:
+        - Once, or occasionally
+        - Daily
+        - Every few minutes (live)
+  - type: dropdown
+    id: commercial
+    attributes:
+      label: Is this for commercial use?
+      options:
+        - "No"
+        - "Yes"
+        - Not sure yet

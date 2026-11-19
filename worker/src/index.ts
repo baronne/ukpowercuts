@@ -1,6 +1,22 @@
 import { poll, type Env } from './poll.ts';
 
-const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS' };
+// The API serves our own site, not the public: browsers only get CORS for origins listed in ALLOWED_ORIGINS
+// (comma-separated). It doesn't stop server-side scraping, but other websites can't embed the feed.
+// Responses are built without CORS headers and get them per request in fetch(), because memo() shares bodies
+// across callers from different origins.
+function withCors(req: Request, env: Env, res: Response): Response {
+  const origin = req.headers.get('Origin');
+  const allowed = (env.ALLOWED_ORIGINS ?? '').split(',').map((o) => o.trim()).filter(Boolean);
+  // Snapshots are stored gzipped with Content-Encoding: gzip; 'manual' sends those bytes as-is instead of
+  // letting the runtime compress them a second time.
+  const out = new Response(res.body, { status: res.status, headers: res.headers, encodeBody: res.headers.has('Content-Encoding') ? 'manual' : 'automatic' });
+  out.headers.append('Vary', 'Origin');
+  if (origin && allowed.includes(origin)) {
+    out.headers.set('Access-Control-Allow-Origin', origin);
+    out.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  }
+  return out;
+}
 
 const ROUTES: Record<string, string> = {
   '/api/now.json': 'latest.json',
@@ -31,14 +47,14 @@ const dayMs = (d: string) => Date.parse(`${d}T00:00:00Z`);
 const snapshotDateOk = (d: string) => { const t = dayMs(d); return t >= Date.now() - 9 * DAY && t <= Date.now() + DAY; };
 /** Exports start in 2026 and are never in the future. */
 const exportDateOk = (d: string) => { const t = dayMs(d); return t >= Date.parse('2026-01-01T00:00:00Z') && t <= Date.now() + DAY; };
-const NOT_FOUND = () => new Response('Not found', { status: 404, headers: CORS });
+const NOT_FOUND = () => new Response('Not found', { status: 404 });
 
 const TTL: Record<string, number> = { '/api/now.json': 60_000, '/api/history.json': 120_000, '/api/timeline.json': 600_000 };
 
 async function serve(env: Env, key: string, extra: HeadersInit = {}): Promise<Response> {
   const obj = await env.BUCKET.get(key);
-  if (!obj) return new Response('Not found', { status: 404, headers: CORS });
-  const headers = new Headers({ ...CORS, 'Cache-Control': 'public, max-age=60', ...extra });
+  if (!obj) return new Response('Not found', { status: 404 });
+  const headers = new Headers({ 'Cache-Control': 'public, max-age=60', ...extra });
   obj.writeHttpMetadata(headers); // content-type / content-encoding stored at write time
   headers.set('ETag', obj.httpEtag);
   return new Response(obj.body, { headers });
@@ -46,7 +62,17 @@ async function serve(env: Env, key: string, extra: HeadersInit = {}): Promise<Re
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
-    if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
+    return withCors(req, env, await route(req, env));
+  },
+
+  async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext) {
+    ctx.waitUntil(poll(env));
+  },
+};
+
+async function route(req: Request, env: Env): Promise<Response> {
+    if (req.method === 'OPTIONS') return new Response(null, { status: 204 });
+    if (req.method !== 'GET' && req.method !== 'HEAD') return new Response('Method not allowed', { status: 405 });
     const { pathname } = new URL(req.url);
 
     if (ROUTES[pathname]) return memo(pathname, TTL[pathname]!, () => serve(env, ROUTES[pathname]!));
@@ -56,7 +82,7 @@ export default {
         const latest = await env.BUCKET.get('latest.json');
         if (!latest) return NOT_FOUND();
         const { generatedAt, status } = (await latest.json()) as any;
-        return Response.json({ generatedAt, status }, { headers: { ...CORS, 'Cache-Control': 'public, max-age=60' } });
+        return Response.json({ generatedAt, status }, { headers: { 'Cache-Control': 'public, max-age=60' } });
       });
     }
 
@@ -67,6 +93,9 @@ export default {
       return memo(pathname, 3_600_000, () => serve(env, `snapshots/${snap[1]}/${snap[2]}.json.gz`, { 'Cache-Control': 'public, max-age=86400' }));
     }
 
+    // Daily exports are still written to R2 but only served when PUBLIC_EXPORTS = "true".
+    if (pathname.startsWith('/exports/') && env.PUBLIC_EXPORTS !== 'true') return NOT_FOUND();
+
     const exp = pathname.match(/^\/exports\/(\d{4}-\d{2}-\d{2}\.(?:json|csv))$/);
     if (exp) {
       if (!exportDateOk(exp[1]!.slice(0, 10))) return NOT_FOUND();
@@ -76,7 +105,7 @@ export default {
     if (pathname === '/exports/') {
       return memo(pathname, 3_600_000, async () => {
         const list = await env.BUCKET.list({ prefix: 'exports/' }); // Class A operation: memoised so it runs at most hourly per instance
-        return Response.json(list.objects.map((o) => o.key.replace('exports/', '')).sort().reverse(), { headers: { ...CORS, 'Cache-Control': 'public, max-age=3600' } });
+        return Response.json(list.objects.map((o) => o.key.replace('exports/', '')).sort().reverse(), { headers: { 'Cache-Control': 'public, max-age=3600' } });
       });
     }
 
@@ -86,10 +115,5 @@ export default {
       await poll(env, at ? new Date(at) : new Date());
       return new Response('polled\n');
     }
-    return new Response('UK power cut map API: /api/now.json /api/status.json /api/timeline.json /api/history.json', { status: 404, headers: CORS });
-  },
-
-  async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext) {
-    ctx.waitUntil(poll(env));
-  },
-};
+    return NOT_FOUND();
+}

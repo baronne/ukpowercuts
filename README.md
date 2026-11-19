@@ -1,6 +1,6 @@
 # UK Power Cuts
 
-An open-source, single live map of power cuts across **every** UK electricity network (UKPN, NGED, SSEN, SPEN, Northern Powergrid, Electricity North West, NIE Networks), with 7 days of history and a daily open dataset. Born from a thread on r/UKPreppers asking for exactly this.
+An open-source, single live map of power cuts across **every** UK electricity network (UKPN, NGED, SSEN, SPEN, Northern Powergrid, Electricity North West, NIE Networks), with 7 days of history. Born from a thread on r/UKPreppers asking for exactly this.
 
 > Not an official source. If your power is off, call **105** (free).
 
@@ -10,7 +10,7 @@ An open-source, single live map of power cuts across **every** UK electricity ne
 - `worker` – Cloudflare Worker. A cron every 5 minutes polls all feeds, writes `latest.json` plus a gzipped snapshot to R2, and updates a rolling 7-day history. Hourly it adds a timeline point, prunes old snapshots and (at 00:xx UTC) writes the previous day's export. If a feed fails, its last good data is carried forward and flagged stale.
 - `web` – static MapLibre GL JS app (OpenFreeMap tiles, no API key), postcode check via postcodes.io, 7-day replay slider.
 
-API (CORS open): `/api/now.json`, `/api/status.json`, `/api/timeline.json`, `/api/history.json`, `/api/snapshot/YYYY-MM-DD/HHMM`, `/exports/`.
+API (for the site itself): `/api/now.json`, `/api/status.json`, `/api/timeline.json`, `/api/history.json`, `/api/snapshot/YYYY-MM-DD/HHMM`. Browsers only get CORS for origins in `ALLOWED_ORIGINS` (`worker/wrangler.toml`). Daily exports are written to R2 under `exports/` but only served at `/exports/` when `PUBLIC_EXPORTS = "true"`. Want the data? Open a [data access request](https://github.com/baronne/ukpowercuts/issues/new/choose).
 
 ## Develop
 

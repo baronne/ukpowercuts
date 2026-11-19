@@ -1,0 +1,42 @@
+name: Bug or wrong data
+description: Something on the map is broken, missing or looks wrong
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the map. **If your power is off right now, call 105.** We can't fix live faults.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - The site isn't working (blank map, errors, won't load)
+        - An outage is missing, wrong or out of date
+        - The postcode check gave a wrong answer
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect to see?
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Area or network (optional)
+      description: The first half of a postcode (e.g. SW1A) or the network (e.g. UKPN) helps. Please don't post your full address.
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser (optional)
+      placeholder: e.g. iPhone 15, Safari
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot (optional)
+      description: Drag an image in here.
