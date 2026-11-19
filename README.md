@@ -61,7 +61,7 @@ Before launch: ask SSEN / NIE / Northern Powergrid about reuse terms (SSEN and N
 
 ## Support
 
-The map and data are free and always will be: no ads, no paywalls. If it helped you, you can [buy the maintainer a coffee](https://ko-fi.com/baronne) towards hosting and the domain. To show the tip link on your own deployment, build with `VITE_KOFI_URL=https://ko-fi.com/<name>`; with it unset, no tip UI appears.
+The map and data are free and always will be: no ads, no paywalls. If it helped you, you can [buy me a coffee](https://ko-fi.com/baronne) towards hosting and the domain. To show the tip link on your own deployment, build with `VITE_KOFI_URL=https://ko-fi.com/<name>`; with it unset, no tip UI appears.
 
 ## Licence
 

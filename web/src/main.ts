@@ -217,7 +217,7 @@ $('about-open').addEventListener('click', () => about.showModal());
 about.addEventListener('click', (e) => { if (e.target === about) about.close(); }); // click on the backdrop closes it
 
 const footerTip = $('tip-footer');
-if (KOFI) { footerTip.append(tipLink('☕ Support running costs')); } else { footerTip.hidden = true; }
+if (KOFI) { footerTip.append(tipLink('☕ Buy me a coffee')); } else { footerTip.hidden = true; }
 
 const box = $('pc-result');
 function showResult(kind: '' | 'good' | 'bad', title: string, detail = '', extra?: Node) {
