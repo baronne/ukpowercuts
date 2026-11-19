@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --test-scheduled",
+    "dev": "mkdir -p ../web/dist && wrangler dev --test-scheduled",
     "deploy": "wrangler deploy"
   },
   "dependencies": { "@powercut/core": "*" },

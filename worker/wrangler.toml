@@ -1,11 +1,16 @@
+# One Worker for everything: it serves the static site (web/dist), answers /api/*, and runs the 5-minute cron.
+# Deploy with `npm run deploy` from the repo root (it builds the site first).
 name = "uk-powercut-map"
 main = "src/index.ts"
-compatibility_date = "2025-01-01"
-# Keep the old workers.dev address alive so existing links and the previous site build keep working.
+compatibility_date = "2026-11-01"
 workers_dev = true
 
-# Serve the API on the site's own domain (this route runs in front of the site's custom domain).
-routes = [{ pattern = "ukpowercuts.uk/api/*", zone_name = "ukpowercuts.uk" }]
+# The ukpowercuts.uk zone must be on this Cloudflare account, with no leftover A/CNAME records for these names
+# (deploy creates them, plus the certificates).
+routes = [
+  { pattern = "ukpowercuts.uk", custom_domain = true },
+  { pattern = "www.ukpowercuts.uk", custom_domain = true },
+]
 
 [triggers]
 crons = ["*/5 * * * *"]
@@ -14,13 +19,19 @@ crons = ["*/5 * * * *"]
 binding = "BUCKET"
 bucket_name = "uk-powercut-map"
 
+# The built site. Static files are answered by Cloudflare directly (free, and they don't run the Worker or
+# count against its request limit); only the paths below run our code.
+[assets]
+directory = "../web/dist"
+run_worker_first = ["/api/*", "/exports/*", "/__poll"]
+
 # Secrets (set with `wrangler secret put`): SPEN_KEY, ENWL_KEY
-# Optional var: EXPORT_EXCLUDE = "ssen,nie"  (DNOs left out of the bulk daily exports until licences are confirmed)
 [vars]
+# DNOs left out of the bulk daily exports until their licences are confirmed.
 EXPORT_EXCLUDE = "ssen,nie"
-# Only our own site may call the API from a browser (same-origin calls from ukpowercuts.uk need no CORS;
-# www and the old workers.dev address do).
-ALLOWED_ORIGINS = "https://ukpowercuts.uk,https://www.ukpowercuts.uk,https://uk-power-cut-map-web.baronne.workers.dev"
+# The site and API share one origin, so no CORS is needed. To let another site call the API from a browser,
+# list its origin here (comma-separated), e.g. ALLOWED_ORIGINS = "https://example.org".
+ALLOWED_ORIGINS = ""
 # Daily exports keep being written to R2; set to "true" to serve them publicly at /exports/.
 PUBLIC_EXPORTS = "false"
 

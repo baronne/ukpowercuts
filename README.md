@@ -10,7 +10,7 @@ An open-source, single live map of power cuts across **every** UK electricity ne
 - `worker` – Cloudflare Worker. A cron every 5 minutes polls all feeds, writes `latest.json` plus a gzipped snapshot to R2, and updates a rolling 7-day history. Hourly it adds a timeline point, prunes old snapshots and (at 00:xx UTC) writes the previous day's export. If a feed fails, its last good data is carried forward and flagged stale.
 - `web` – static MapLibre GL JS app (OpenFreeMap tiles, no API key), postcode check via postcodes.io, 7-day replay slider.
 
-API (for the site itself): `/api/now.json`, `/api/status.json`, `/api/timeline.json`, `/api/history.json`, `/api/snapshot/YYYY-MM-DD/HHMM`. Browsers only get CORS for origins in `ALLOWED_ORIGINS` (`worker/wrangler.toml`). Daily exports are written to R2 under `exports/` but only served at `/exports/` when `PUBLIC_EXPORTS = "true"`. Want the data? Open a [data access request](https://github.com/baronne/ukpowercuts/issues/new/choose).
+API (for the site itself): `/api/now.json`, `/api/status.json`, `/api/timeline.json`, `/api/history.json`, `/api/snapshot/YYYY-MM-DD/HHMM`. The site and API share one origin; other sites only get CORS if listed in `ALLOWED_ORIGINS` (`worker/wrangler.toml`). Daily exports are written to R2 under `exports/` but only served at `/exports/` when `PUBLIC_EXPORTS = "true"`. Want the data? Open a [data access request](https://github.com/baronne/ukpowercuts/issues/new/choose).
 
 ## Develop
 
@@ -38,15 +38,17 @@ Known limits: UKPN and ENWL omit very small faults; SPEN publishes no customer c
 
 ## Deploy (Cloudflare)
 
+One Worker (`worker/`) serves the static site, the `/api/*` endpoints and the 5-minute cron, so there is a single deployment and no CORS.
+
 ```bash
 npx wrangler login
 npx wrangler r2 bucket create uk-powercut-map
-(cd worker && npx wrangler deploy)                                   # API + 5-minute cron
 npx wrangler secret put SPEN_KEY --config worker/wrangler.toml       # optional, enables SPEN
 npx wrangler secret put ENWL_KEY --config worker/wrangler.toml       # optional, enables ENWL
-VITE_API_BASE=https://ukpowercuts.uk VITE_KOFI_URL=https://ko-fi.com/<name> npm run build:web
-(cd web && npx wrangler deploy)                                      # static site (Workers static assets)
+VITE_KOFI_URL=https://ko-fi.com/<name> npm run deploy                # builds the site, then deploys the Worker
 ```
+
+To use your own domain, add it under the Worker's Settings → Domains & Routes (the domain's DNS must be on Cloudflare).
 
 ### Keeping costs at zero
 Cloudflare has no hard spending cap on R2, so the design keeps usage far inside the free tier (10 GB, 1M Class A, 10M Class B per month):
