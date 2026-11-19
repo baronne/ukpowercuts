@@ -31,7 +31,7 @@ npm run dev:web          # map on :5173, proxies /api to the Worker
 | SSEN | `…/opendataportal-prd/v4/api/getallfaults` | no |
 | Northern Powergrid | Opendatasoft `live-power-cuts-data` | no |
 | NIE Networks | `powercheck.nienetworks.co.uk` faults API (Irish Grid coordinates, converted) | no |
-| SPEN | Opendatasoft `distribution-network-live-outages` (CC BY 4.0) | **free account** |
+| SPEN | Opendatasoft `national-energy-outage-data` (CC BY 4.0) | **free account** |
 | Electricity North West | Opendatasoft `live_incidents` (CC BY 4.0) | **free account** |
 
 Known limits: UKPN and ENWL omit very small faults; SPEN publishes no customer counts; SSEN and NIE state no licence, so they are shown live with attribution but left out of the bulk daily exports (`EXPORT_EXCLUDE`) until confirmed.

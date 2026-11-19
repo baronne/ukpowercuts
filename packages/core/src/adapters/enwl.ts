@@ -4,7 +4,6 @@ import { num, ukLocalToIso } from '../util.ts';
 
 /**
  * Electricity North West `live_incidents`. Only incidents with 5+ customers off; the point is the upstream switch.
- * TODO: verify against a real response once an API key is available (fixture is a hand-written sample).
  */
 export function normaliseEnwl(rows: any[]): Outage[] {
   const out: Outage[] = [];

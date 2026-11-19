@@ -5,7 +5,6 @@ import { num, postcodeList, truthy, ukLocalToIso } from '../util.ts';
 /**
  * SPEN NEO dataset. Field names follow the portal metadata; times are UK local time although labelled +00:00,
  * so the offset is stripped before conversion. No customer counts are published.
- * TODO: verify against a real response once an API key is available (fixture is a hand-written sample).
  */
 const stripOffset = (s: unknown) => (typeof s === 'string' ? s.replace(/(Z|[+-]00:?00)$/, '') : s);
 
@@ -39,6 +38,6 @@ export const spen: Adapter = {
   async fetch(opts) {
     const key = opts.apiKeys?.spen;
     if (!key) throw new Error('SPEN_KEY not configured (free Opendatasoft account required)');
-    return normaliseSpen(await fetchOdsExport('spenergynetworks.opendatasoft.com', 'distribution-network-live-outages', opts, key));
+    return normaliseSpen(await fetchOdsExport('spenergynetworks.opendatasoft.com', 'national-energy-outage-data', opts, key));
   },
 };

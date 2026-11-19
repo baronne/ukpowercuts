@@ -20,7 +20,7 @@ const sources: Record<string, string> = {
   'nie-faults': 'https://powercheck.nienetworks.co.uk/NIEPowerCheckerWebAPI/api/faults',
   'nged-292f': 'https://connecteddata.nationalgrid.co.uk/api/3/action/datastore_search?resource_id=292f788f-4339-455b-8cc0-153e14509d4d&limit=100',
   'nged-a136': 'https://connecteddata.nationalgrid.co.uk/api/3/action/datastore_search?resource_id=a1365982-4e05-463c-8304-8323a2ba0ccd&limit=100',
-  'spen-live': ods('spenergynetworks.opendatasoft.com', 'distribution-network-live-outages'),
+  'spen-live': ods('spenergynetworks.opendatasoft.com', 'national-energy-outage-data'),
   'enwl-live': ods('electricitynorthwest.opendatasoft.com', 'live_incidents'),
 };
 

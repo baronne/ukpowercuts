@@ -1,0 +1,197 @@
+{
+ "total_count": 8,
+ "results": [
+  {
+   "geo_point_2d": {
+    "lon": -2.106781826,
+    "lat": 53.4240907748
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -2.106781826,
+      53.4240907748
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 143018470",
+   "incident_type": "Underground Main",
+   "outage_time": "2026-11-19T02:05:16+00:00",
+   "customers_affected": 70,
+   "customers_off_supply": 70,
+   "incident_status": "Dispatched",
+   "estimated_restoration_time": "2026-11-19T14:15:00+00:00"
+  },
+  {
+   "geo_point_2d": {
+    "lon": -1.9980990356,
+    "lat": 53.552381407
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -1.9980990356,
+      53.552381407
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 143018511",
+   "incident_type": "Planned Supply Interruption",
+   "outage_time": "2026-11-19T09:01:00+00:00",
+   "customers_affected": 25,
+   "customers_off_supply": 25,
+   "incident_status": "Dispatched",
+   "estimated_restoration_time": "2026-11-19T12:15:00+00:00"
+  },
+  {
+   "geo_point_2d": {
+    "lon": -2.7419026366,
+    "lat": 54.3196633687
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -2.7419026366,
+      54.3196633687
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 143018514",
+   "incident_type": "Planned Supply Interruption",
+   "outage_time": "2026-11-19T09:05:59+00:00",
+   "customers_affected": 154,
+   "customers_off_supply": 154,
+   "incident_status": "New",
+   "estimated_restoration_time": "2026-11-19T12:15:00+00:00"
+  },
+  {
+   "geo_point_2d": {
+    "lon": -2.3233710974,
+    "lat": 53.5209607837
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -2.3233710974,
+      53.5209607837
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 149009059",
+   "incident_type": "Underground Service",
+   "outage_time": "2026-11-15T09:57:15+00:00",
+   "customers_affected": 7,
+   "customers_off_supply": 1,
+   "incident_status": "Dispatched",
+   "estimated_restoration_time": "2026-11-17T18:00:00+00:00"
+  },
+  {
+   "geo_point_2d": {
+    "lon": -2.2173202413,
+    "lat": 53.5921675637
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -2.2173202413,
+      53.5921675637
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 149009256",
+   "incident_type": "Underground Main",
+   "outage_time": "2026-11-16T06:29:08+00:00",
+   "customers_affected": 65,
+   "customers_off_supply": 65,
+   "incident_status": "Dispatched",
+   "estimated_restoration_time": "2026-11-19T12:30:00+00:00"
+  },
+  {
+   "geo_point_2d": {
+    "lon": -3.1733864352,
+    "lat": 54.7428034997
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -3.1733864352,
+      54.7428034997
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 143018536",
+   "incident_type": "Planned Supply Interruption",
+   "outage_time": "2026-11-19T09:28:33+00:00",
+   "customers_affected": 126,
+   "customers_off_supply": 126,
+   "incident_status": "Dispatched",
+   "estimated_restoration_time": "2026-11-19T15:30:00+00:00"
+  },
+  {
+   "geo_point_2d": {
+    "lon": -3.3922833741,
+    "lat": 54.3232735476
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -3.3922833741,
+      54.3232735476
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 143018664",
+   "incident_type": "High Voltage Fault",
+   "outage_time": "2026-11-19T12:38:19+00:00",
+   "customers_affected": 247,
+   "customers_off_supply": 247,
+   "incident_status": "Dispatched",
+   "estimated_restoration_time": "2026-11-19T15:45:00+00:00"
+  },
+  {
+   "geo_point_2d": {
+    "lon": -3.223238231,
+    "lat": 54.2779819034
+   },
+   "geo_shape": {
+    "type": "Feature",
+    "geometry": {
+     "coordinates": [
+      -3.223238231,
+      54.2779819034
+     ],
+     "type": "Point"
+    },
+    "properties": {}
+   },
+   "incident_num": "INC 143018528",
+   "incident_type": "Planned Supply Interruption",
+   "outage_time": "2026-11-19T09:14:21+00:00",
+   "customers_affected": 53,
+   "customers_off_supply": 53,
+   "incident_status": "Dispatched",
+   "estimated_restoration_time": "2026-11-19T17:00:00+00:00"
+  }
+ ]
+}

@@ -10,7 +10,7 @@
   "records": [
    {
     "_id": 1,
-    "Upload Date": "2026-11-19T13:25:00",
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-117158-l",
     "Confirmed Off": 4,
@@ -29,26 +29,7 @@
    },
    {
     "_id": 2,
-    "Upload Date": "2026-11-19T13:25:00",
-    "Region": "South West",
-    "Incident ID": "INCD-117214-l",
-    "Confirmed Off": 0,
-    "Predicted Off": 6,
-    "Restored": 0,
-    "Status": "Awaiting",
-    "Planned": "false",
-    "Category": "LV OVERHEAD",
-    "Resource Status": "SENT",
-    "Start Time": "2026-11-19T12:15:00",
-    "ETR": null,
-    "Voltage": "LV",
-    "Location Latitude": 50.86669,
-    "Location Longitude": -3.056069,
-    "Postcodes": "EX14 9AX"
-   },
-   {
-    "_id": 3,
-    "Upload Date": "2026-11-19T13:25:00",
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-117194-l",
     "Confirmed Off": 0,
@@ -66,8 +47,8 @@
     "Postcodes": "PL7 2GZ, PL7 2WR, PL7 2GY, PL7 2GT, PL7 2GP"
    },
    {
-    "_id": 4,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 3,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-117146-l",
     "Confirmed Off": 10,
@@ -85,8 +66,8 @@
     "Postcodes": "EX2 5PF, EX2 5QW, EX2 5PN, EX2 5NF, EX2 5PY, EX2 5PZ, EX2 5PG, EX2 5PP"
    },
    {
-    "_id": 5,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 4,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-117169-l",
     "Confirmed Off": 2,
@@ -104,8 +85,8 @@
     "Postcodes": "TA21 9AN"
    },
    {
-    "_id": 6,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 5,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-117155-l",
     "Confirmed Off": 0,
@@ -123,8 +104,8 @@
     "Postcodes": "BS40 8AT, BS40 8DG, BS40 8EH, BS40 8DF, BS40 8AS, BS40 8AB, BS40 8EW, BS40 8AE, BS40 8DE, BS40 8AD, BS40 8EN, BS40 8FF, BS40 8EG, BS40 8AR, BS40 8AA, BS40 8DG"
    },
    {
-    "_id": 7,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 6,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-44802-v",
     "Confirmed Off": 0,
@@ -142,8 +123,8 @@
     "Postcodes": "TR1 2LW, TR1 2EJ, TR1 2PU, TR1 2EG, TR1 2LP, TR1 2RL, TR1 2LL, TR1 1XX"
    },
    {
-    "_id": 8,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 7,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-117167-l",
     "Confirmed Off": 42,
@@ -161,8 +142,8 @@
     "Postcodes": "BA2 6UL, BA2 6UP, BA2 6UH, BA2 6UZ, BA2 6UJ, BA2 6UU, BA2 6UR"
    },
    {
-    "_id": 9,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 8,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South West",
     "Incident ID": "INCD-117172-l",
     "Confirmed Off": 0,
@@ -180,8 +161,27 @@
     "Postcodes": "EX14 1AL, EX14 1AW, EX14 1AT, EX14 1AS, EX14 1AU, EX14 1AN, EX14 1BD"
    },
    {
+    "_id": 9,
+    "Upload Date": "2026-11-19T13:45:00",
+    "Region": "South West",
+    "Incident ID": "INCD-117214-l",
+    "Confirmed Off": 6,
+    "Predicted Off": 0,
+    "Restored": 0,
+    "Status": "In Progress",
+    "Planned": "false",
+    "Category": "LV OVERHEAD",
+    "Resource Status": "ONS",
+    "Start Time": "2026-11-19T12:15:00",
+    "ETR": "2026-11-19T14:30:00",
+    "Voltage": "LV",
+    "Location Latitude": 50.86669,
+    "Location Longitude": -3.056069,
+    "Postcodes": "EX14 9AX"
+   },
+   {
     "_id": 10,
-    "Upload Date": "2026-11-19T13:25:00",
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "South Wales",
     "Incident ID": "INCD-64708-f",
     "Confirmed Off": 88,
@@ -190,7 +190,7 @@
     "Status": "In Progress",
     "Planned": "false",
     "Category": "LV UNDERGROUND",
-    "Resource Status": "ONS",
+    "Resource Status": "LEFS",
     "Start Time": "2026-11-19T11:01:00",
     "ETR": "2026-11-19T16:00:00",
     "Voltage": "LV",
@@ -200,7 +200,7 @@
    },
    {
     "_id": 11,
-    "Upload Date": "2026-11-19T13:25:00",
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "West Midlands",
     "Incident ID": "INCD-365802-f",
     "Confirmed Off": 31,
@@ -219,7 +219,7 @@
    },
    {
     "_id": 12,
-    "Upload Date": "2026-11-19T13:25:00",
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "West Midlands",
     "Incident ID": "INCD-365803-f",
     "Confirmed Off": 1,
@@ -238,7 +238,7 @@
    },
    {
     "_id": 13,
-    "Upload Date": "2026-11-19T13:25:00",
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "West Midlands",
     "Incident ID": "INCD-76683-p",
     "Confirmed Off": 0,
@@ -247,7 +247,7 @@
     "Status": "In Progress",
     "Planned": "false",
     "Category": "LV UNDERGROUND",
-    "Resource Status": "ONS",
+    "Resource Status": "CANC",
     "Start Time": "2026-11-19T09:13:00",
     "ETR": null,
     "Voltage": "LV",
@@ -257,7 +257,26 @@
    },
    {
     "_id": 14,
-    "Upload Date": "2026-11-19T13:25:00",
+    "Upload Date": "2026-11-19T13:45:00",
+    "Region": "West Midlands",
+    "Incident ID": "INCD-76691-p",
+    "Confirmed Off": 0,
+    "Predicted Off": 33,
+    "Restored": 0,
+    "Status": "In Progress",
+    "Planned": "false",
+    "Category": "LV OVERHEAD",
+    "Resource Status": "ONS",
+    "Start Time": "2026-11-19T10:39:00",
+    "ETR": null,
+    "Voltage": "LV",
+    "Location Latitude": 52.00668,
+    "Location Longitude": -1.898078,
+    "Postcodes": "WR12 7NE, WR12 7NF, WR12 7HE"
+   },
+   {
+    "_id": 15,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "West Midlands",
     "Incident ID": "INCD-365789-f",
     "Confirmed Off": 0,
@@ -275,8 +294,8 @@
     "Postcodes": "B37 6UF, B37 6UB, B37 6UH, B37 6UE, B37 6UD, B37 6UA"
    },
    {
-    "_id": 15,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 16,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "West Midlands",
     "Incident ID": "INCD-80822-m",
     "Confirmed Off": 1,
@@ -285,7 +304,7 @@
     "Status": "In Progress",
     "Planned": "false",
     "Category": "LV UNDERGROUND",
-    "Resource Status": "ONS",
+    "Resource Status": "COMP",
     "Start Time": "2026-11-19T09:30:00",
     "ETR": null,
     "Voltage": "LV",
@@ -294,8 +313,8 @@
     "Postcodes": "B70 8JF"
    },
    {
-    "_id": 16,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 17,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "West Midlands",
     "Incident ID": "INCD-80723-m",
     "Confirmed Off": 2,
@@ -313,8 +332,8 @@
     "Postcodes": "GL12 8LD"
    },
    {
-    "_id": 17,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 18,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "West Midlands",
     "Incident ID": "INCD-365799-f",
     "Confirmed Off": 53,
@@ -332,8 +351,8 @@
     "Postcodes": "SY3 9HX, SY3 9HS, SY3 9HU"
    },
    {
-    "_id": 18,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 19,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144761-h",
     "Confirmed Off": 34,
@@ -342,7 +361,7 @@
     "Status": "In Progress",
     "Planned": "false",
     "Category": "LV UNDERGROUND",
-    "Resource Status": "LEFS",
+    "Resource Status": "COMP",
     "Start Time": "2026-11-19T09:31:00",
     "ETR": null,
     "Voltage": "LV",
@@ -351,8 +370,8 @@
     "Postcodes": "PE25 2RP, PE25 2RJ, PE25 2QF, PE25 2QD, PE25 2QE, PE25 2RN, PE25 2RP, PE25 2QF, PE25 2RJ, PE25 2QE, PE25 2QD"
    },
    {
-    "_id": 19,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 20,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144700-h",
     "Confirmed Off": 1,
@@ -370,8 +389,8 @@
     "Postcodes": "NG31 6JF, NG31 6JG, NG31 6JF, NG31 6ES"
    },
    {
-    "_id": 20,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 21,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144724-h",
     "Confirmed Off": 15,
@@ -389,8 +408,8 @@
     "Postcodes": "LE11 2JS"
    },
    {
-    "_id": 21,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 22,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144734-h",
     "Confirmed Off": 21,
@@ -408,8 +427,8 @@
     "Postcodes": "CV10 7NQ, CV10 7NQ, CV10 8JT"
    },
    {
-    "_id": 22,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 23,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144749-h",
     "Confirmed Off": 0,
@@ -427,8 +446,8 @@
     "Postcodes": "CV21 1BL"
    },
    {
-    "_id": 23,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 24,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144754-h",
     "Confirmed Off": 1,
@@ -446,8 +465,8 @@
     "Postcodes": "NN8 3RP"
    },
    {
-    "_id": 24,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 25,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144726-h",
     "Confirmed Off": 1,
@@ -465,8 +484,27 @@
     "Postcodes": "PE25 2LA, PE24 5AD, PE24 4UF, PE25 1HN, PE24 5JQ, PE25 2LA, PE24 5AE, PE24 4UE, PE24 4HF, PE24 5AB, PE24 4UD, PE24 4UB, PE24 4UA"
    },
    {
-    "_id": 25,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 26,
+    "Upload Date": "2026-11-19T13:45:00",
+    "Region": "East Midlands",
+    "Incident ID": "INCD-144791-h",
+    "Confirmed Off": 0,
+    "Predicted Off": 111,
+    "Restored": 0,
+    "Status": "In Progress",
+    "Planned": "false",
+    "Category": "LV DAMAGE",
+    "Resource Status": "ONS",
+    "Start Time": "2026-11-19T12:05:00",
+    "ETR": null,
+    "Voltage": "LV",
+    "Location Latitude": 52.35434,
+    "Location Longitude": -1.278154,
+    "Postcodes": "CV22 6HF, CV22 6HE, CV22 6JD, CV22 6JB, CV22 6JE"
+   },
+   {
+    "_id": 27,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144739-h",
     "Confirmed Off": 4,
@@ -484,8 +522,8 @@
     "Postcodes": "NG9 2NY"
    },
    {
-    "_id": 26,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 28,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144760-h",
     "Confirmed Off": 15,
@@ -503,8 +541,8 @@
     "Postcodes": "LN5 0RE, LN5 0RF, LN5 0RB, LN5 0RQ, LN5 0RD, LN5 0RH, LN5 0RG, LN6 9JY, LN6 9LA, LN5 0RA, LN5 0RP, LN6 9LB, LN5 0RJ, LN5 0RW, LN5 0FD, LN5 0RL, LN6 9LE, LN6 9LH, LN5 0RS, LN5 0RR, LN6 9JZ, LN6 9LD, LN6 9YL, LN5 9JE"
    },
    {
-    "_id": 27,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 29,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144755-h",
     "Confirmed Off": 59,
@@ -522,8 +560,8 @@
     "Postcodes": "PE6 7RG, PE6 7RH, PE6 7SU, PE6 7QW"
    },
    {
-    "_id": 28,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 30,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144794-h",
     "Confirmed Off": 0,
@@ -541,8 +579,8 @@
     "Postcodes": "NG5 6NH, NG5 6NF, NG5 6NG, NG5 6NJ, NG5 6NE, NG5 7EL"
    },
    {
-    "_id": 29,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 31,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144796-h",
     "Confirmed Off": 0,
@@ -560,8 +598,8 @@
     "Postcodes": "MK18 2AY, MK18 2AX, MK18 2AJ, MK18 2AL, MK18 2AW, MK18 2AP, MK18 2AR, MK18 2AH, MK18 2AN, MK18 2FT, MK18 2BA, MK18 4LR, MK18 2EX"
    },
    {
-    "_id": 30,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 32,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144783-h",
     "Confirmed Off": 0,
@@ -579,8 +617,8 @@
     "Postcodes": "LE9 4LD"
    },
    {
-    "_id": 31,
-    "Upload Date": "2026-11-19T13:25:00",
+    "_id": 33,
+    "Upload Date": "2026-11-19T13:45:00",
     "Region": "East Midlands",
     "Incident ID": "INCD-144787-h",
     "Confirmed Off": 9,
@@ -672,7 +710,7 @@
    "start": "/api/3/action/datastore_search?resource_id=292f788f-4339-455b-8cc0-153e14509d4d&limit=100",
    "next": "/api/3/action/datastore_search?resource_id=292f788f-4339-455b-8cc0-153e14509d4d&limit=100&offset=100"
   },
-  "total": 31,
+  "total": 33,
   "total_was_estimated": false
  }
 }
