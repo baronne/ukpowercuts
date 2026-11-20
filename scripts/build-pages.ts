@@ -67,6 +67,7 @@ const PLACES: Place[] = [
   { slug: 'belfast', name: 'Belfast', nation: 'Northern Ireland', lat: 54.597, lon: -5.93, r: 20, net: 'nie' },
 ];
 
+const mi = (km: number) => Math.round(km / 1.609344); // radii are stored in km; people read miles
 const BASE = '/power-cuts/';
 const urlNet = (n: Network) => `${BASE}${n.slug}/`;
 const urlPlace = (p: Place) => `${BASE}${p.slug}/`;
@@ -226,17 +227,17 @@ for (const p of PLACES) {
   pages.push({
     path: urlPlace(p),
     title: `Power cuts in ${p.name} today: live map | UK Power Cuts`,
-    description: `Is there a power cut in ${p.name}? See live outages and planned work within ${p.r} km, updated every 5 minutes. ${p.name} is served by ${n.full}; call ${n.phone} to report a fault.`,
+    description: `Is there a power cut in ${p.name}? See live outages and planned work within ${mi(p.r)} miles, updated every 5 minutes. ${p.name} is served by ${n.full}; call ${n.phone} to report a fault.`,
     h1: `Power cuts in ${p.name}`,
     crumbs: [['Home', '/'], ['Power cuts', BASE], [p.name, urlPlace(p)]],
     live: { lat: p.lat, lon: p.lon, r: p.r },
     mapHref: `/?at=${p.lat},${p.lon},10`,
-    body: `<p class="muted">Live power cuts and planned work within ${p.r} km of the centre of ${esc(p.name)}, ${esc(p.nation)}.</p>
+    body: `<p class="muted">Live power cuts and planned work within ${mi(p.r)} miles of the centre of ${esc(p.name)}, ${esc(p.nation)}.</p>
 ${liveBlock}
 <h2>Who supplies electricity in ${esc(p.name)}?</h2>
 <p>The local electricity network in ${esc(p.name)} is run by <a href="${urlNet(n)}">${esc(n.full)}</a>. This is the company that owns the poles, cables and substations and fixes them when they fail. It is separate from the company you pay your bill to, and you can&rsquo;t change it by switching supplier.</p>
 <p>${n.id === 'nie' ? 'To report a power cut, call NIE Networks on <strong>03457 643 643</strong>.' : 'To report a power cut or ask for an update, call <strong>105</strong>. It is free from any phone and connects you to the right network.'}</p>
-<p>Want to check one address? Use the postcode box on the <a href="/">live map</a>; it looks for power cuts within 3 km.</p>
+<p>Want to check one address? Use the postcode box on the <a href="/">live map</a>; it looks for power cuts within 2 miles.</p>
 ${ADVICE}
 <h2>More ${esc(n.short)} areas</h2>
 <p>${placeLinks(near)} <a class="pill" href="${urlNet(n)}">All of ${esc(n.short)}</a></p>

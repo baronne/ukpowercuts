@@ -214,6 +214,7 @@ $('sheet-toggle').addEventListener('click', () => {
 
 // ---- postcode check --------------------------------------------------------------------------
 const norm = (s: string) => s.replace(/\s/g, '').toUpperCase();
+const KM_PER_MILE = 1.609344;
 const km = (a: [number, number], b: [number, number]) => {
   const r = Math.PI / 180, dLat = (b[0] - a[0]) * r, dLon = (b[1] - a[1]) * r;
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dLon / 2) ** 2;
@@ -252,33 +253,33 @@ const callLine = (country?: string) => country === 'Northern Ireland'
   ? 'If your power is off, check your fuse box first, then call NIE Networks on 03457 643 643.'
   : 'If your power is off, check your fuse box first, then call 105 (free).';
 
-function checkArea(label: string, here: [number, number], radius: number, country?: string, pc?: string) {
-  const near = state.outages.filter((o) => km(here, [o.lat, o.lon]) <= radius).sort((a, b) => km(here, [a.lat, a.lon]) - km(here, [b.lat, b.lon]));
+function checkArea(label: string, here: [number, number], radius: number /* miles */, country?: string, pc?: string) {
+  const near = state.outages.filter((o) => km(here, [o.lat, o.lon]) <= radius * KM_PER_MILE).sort((a, b) => km(here, [a.lat, a.lon]) - km(here, [b.lat, b.lon]));
   const exact = pc ? near.find((o) => o.postcodes.some((p) => norm(p) === norm(pc))) : undefined;
-  map.flyTo({ center: [here[1], here[0]], zoom: radius <= 3 ? 12 : 11 });
+  map.flyTo({ center: [here[1], here[0]], zoom: radius <= 2 ? 12 : 11 });
   if (exact) {
     showResult('bad', `${exact.type === 'planned' ? 'Planned work' : 'Power cut'} affecting ${label}`,
       `${exact.etr ? `Estimated back ${when(exact.etr)}. ` : ''}Reported by ${DNO_NAMES[exact.dno]}.`);
   } else if (near.length && pc) {
-    showResult('bad', `${near.length} outage${near.length > 1 ? 's' : ''} within ${radius} km of ${label}`,
-      `None lists your postcode directly. Nearest is ${km(here, [near[0]!.lat, near[0]!.lon]).toFixed(1)} km away (${DNO_NAMES[near[0]!.dno]}).`);
+    showResult('bad', `${near.length} outage${near.length > 1 ? 's' : ''} within ${radius} miles of ${label}`,
+      `None lists your postcode directly. Nearest is ${(km(here, [near[0]!.lat, near[0]!.lon]) / KM_PER_MILE).toFixed(1)} miles away (${DNO_NAMES[near[0]!.dno]}).`);
   } else if (near.length) {
     const planned = near.filter((o) => o.type === 'planned').length;
-    showResult('bad', `${near.length} outage${near.length > 1 ? 's' : ''} within ${radius} km of ${label}`,
+    showResult('bad', `${near.length} outage${near.length > 1 ? 's' : ''} within ${radius} miles of ${label}`,
       `${near.length - planned} unplanned, ${planned} planned. Zoom in on the map for details.`);
   } else {
     let tip: HTMLElement | undefined;
     if (KOFI) { // only in the all-clear case, never next to an outage
       tip = el('span', { class: 'tip' }, 'Found this useful? ', tipLink('Buy me a coffee'), ' to help cover running costs.');
     }
-    showResult('good', `No reported power cuts near ${label}`, `${pc ? '' : `Checked within ${radius} km of the centre. `}${callLine(country)}`, tip);
+    showResult('good', `No reported power cuts near ${label}`, `${pc ? '' : `Checked within ${radius} miles of the centre. `}${callLine(country)}`, tip);
   }
 }
 
 interface PlaceHit { name_1: string; local_type: string; county_unitary: string | null; region: string | null; country: string; latitude: number; longitude: number }
 const PLACE_RANK: Record<string, number> = { City: 0, Town: 1, 'Suburban Area': 2, Village: 3 };
-// bigger places get a wider net, so "Leeds" isn't judged on a 3 km circle
-const placeRadius = (t: string) => (t === 'City' ? 8 : t === 'Town' || t === 'Suburban Area' ? 5 : 3);
+// bigger places get a wider net, so "Leeds" isn't judged on a 2 mile circle
+const placeRadius = (t: string) => (t === 'City' ? 5 : t === 'Town' || t === 'Suburban Area' ? 3 : 2); // miles
 const placeLabel = (p: PlaceHit) => `${p.name_1}${p.county_unitary && p.county_unitary !== p.name_1 ? `, ${p.county_unitary}` : ''}`;
 
 async function searchPlace(q: string) {
@@ -313,8 +314,8 @@ $('pc-form').addEventListener('submit', async (e) => {
     const res = await fetch(`https://api.postcodes.io/${outcode ? 'outcodes' : 'postcodes'}/${encodeURIComponent(code)}`);
     if (!res.ok) throw new Error('not found');
     const { result } = await res.json();
-    if (outcode) return checkArea(result.outcode, [result.latitude, result.longitude], 4, result.country?.[0]);
-    checkArea(result.postcode, [result.latitude, result.longitude], 3, result.country, input);
+    if (outcode) return checkArea(result.outcode, [result.latitude, result.longitude], 3, result.country?.[0]);
+    checkArea(result.postcode, [result.latitude, result.longitude], 2, result.country, input);
   } catch {
     showResult('bad', 'Not recognised', 'Check it and try again, e.g. SW1A 1AA, or the name of a town.');
   }
