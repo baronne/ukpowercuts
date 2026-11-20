@@ -279,12 +279,10 @@ function openSupport() {
   }
   if (!support.open) support.showModal();
 }
-function tipButton() { // Ko-fi's own button image, served from our domain
-  const b = el('button', { type: 'button', class: 'kofi-btn kofi-sm' });
-  b.setAttribute('aria-haspopup', 'dialog'); b.addEventListener('click', openSupport);
-  const img = new Image(91, 23);
-  img.src = '/kofi-button.png'; img.alt = 'Buy Me a Coffee'; img.loading = 'lazy';
-  b.append(img);
+function tipButton() { // same blue pill as the footer
+  const b = el('button', { type: 'button', class: 'kofi-pill kofi-sm' });
+  b.setAttribute('aria-haspopup', 'dialog'); b.innerHTML = `${KOFI_CUP}<span>Buy me a coffee</span>`;
+  b.addEventListener('click', openSupport);
   return b;
 }
 // About & FAQ: the text lives in index.html so search engines can read it without running the app.
