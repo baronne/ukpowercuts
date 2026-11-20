@@ -4,6 +4,8 @@ An open-source, single live map of power cuts across **every** UK electricity ne
 
 > Not an official source. If your power is off, call **105** (free).
 
+Free, no ads. If it's useful to you, you can [buy me a coffee](https://ko-fi.com/baronne) towards the running costs.
+
 ## How it works
 
 - `packages/core` – one adapter per network that normalises its public feed into a single `Outage` shape (pure functions, tested against recorded real responses in `test/fixtures`).

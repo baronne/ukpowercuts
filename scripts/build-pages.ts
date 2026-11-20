@@ -137,6 +137,8 @@ const LD = (p: Page) => JSON.stringify({
 }).replace(/</g, '\\u003c');
 
 const NAMES_JSON = esc(JSON.stringify(DNO_NAMES));
+// Optional tip link, from the same variable the app uses; nothing tip-related is written when it is unset
+const KOFI = /^https:\/\//.test(process.env.VITE_KOFI_URL ?? '') ? esc(process.env.VITE_KOFI_URL!) : '';
 
 function render(p: Page): string {
   const live = p.live
@@ -171,7 +173,7 @@ ${live}
 <h1>${esc(p.h1)}</h1>
 ${p.body}
 </main>
-<footer>UK Power Cuts is an independent, open-source project and is not run by any electricity network. Data comes from each network&rsquo;s own published feed and very small faults may be missing. <a href="/">Live map</a> &middot; <a href="${BASE}">All networks and cities</a> &middot; <a href="/privacy/">Privacy &amp; cookies</a> &middot; <a href="https://github.com/baronne/ukpowercuts">Source code</a></footer>
+<footer>UK Power Cuts is an independent, open-source project and is not run by any electricity network. Data comes from each network&rsquo;s own published feed and very small faults may be missing. <a href="/">Live map</a> &middot; <a href="${BASE}">All networks and cities</a> &middot; <a href="/privacy/">Privacy &amp; cookies</a> &middot; <a href="https://github.com/baronne/ukpowercuts">Source code</a>${KOFI ? ` &middot; <a href="${KOFI}" target="_blank" rel="noopener">&#9749; Buy me a coffee</a>` : ''}</footer>
 ${p.live ? `<script>${LIVE_JS}</script>` : ''}
 </body>
 </html>
@@ -295,7 +297,9 @@ const privacy: Page = {
 <h2>If this changes</h2>
 <p>If we ever add analytics, ads or anything else that needs your consent, we will ask first and update this page.</p>
 <h2>Questions</h2>
-<p>Open an issue on <a href="https://github.com/baronne/ukpowercuts/issues">GitHub</a>. This page is plain-English information, not legal advice.</p>`,
+<p>Open an issue on <a href="https://github.com/baronne/ukpowercuts/issues">GitHub</a>. This page is plain-English information, not legal advice.</p>${KOFI ? `
+<h2>Running costs</h2>
+<p>The site is free, with no ads, and is paid for by one person. If it has helped you, you can <a href="${KOFI}" target="_blank" rel="noopener">buy me a coffee</a> towards hosting and the domain. That is entirely optional.</p>` : ''}`,
 };
 mkdirSync(join(DIST, PRIVACY_PATH), { recursive: true });
 writeFileSync(join(DIST, PRIVACY_PATH, 'index.html'), render(privacy));
