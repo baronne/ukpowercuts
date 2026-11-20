@@ -291,7 +291,8 @@ const privacy: Page = {
 <li><strong>Cloudflare</strong> hosts the site. Like any web host it processes technical request details, such as your IP address, to deliver the pages and protect them from abuse.</li>
 <li><strong><a href="https://openfreemap.org">OpenFreeMap</a></strong> supplies the map tiles. Loading the map sends your IP address and the area you are viewing to them, as with any online map.</li>
 <li><strong><a href="https://postcodes.io">postcodes.io</a></strong> turns a postcode or place name into a location. When you search, what you type goes from your browser straight to them. It does not pass through us, and we never see or store it. The check for power cuts nearby then happens in your browser.</li>
-<li><strong>Links</strong> to GitHub or Ko-fi only connect to those sites if you click them, and their own privacy policies apply from then on.</li>
+<li><strong>Links</strong> to GitHub only connect to that site if you click them, and its own privacy policy applies from then on.</li>
+<li><strong>Tipping (optional).</strong> If you open the &ldquo;Tip me&rdquo; window, Ko-fi&rsquo;s tip panel loads inside it from ko-fi.com. Ko-fi may then set cookies and see your IP address under its own privacy policy. Nothing is requested from Ko-fi unless you open that window.</li>
 </ul>
 <p>None of these is used by us for advertising or tracking, and we don&rsquo;t sell or share data. The outage figures come from the electricity networks&rsquo; own published feeds and contain no personal information.</p>
 <h2>If this changes</h2>

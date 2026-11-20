@@ -263,10 +263,27 @@ const km = (a: [number, number], b: [number, number]) => {
   return 12742 * Math.asin(Math.sqrt(h));
 };
 
-function tipLink(text: string) {
-  const a = document.createElement('a');
-  a.href = KOFI; a.target = '_blank'; a.rel = 'noopener'; a.textContent = text;
-  return a;
+// Every "buy me a coffee" entry point opens the same support dialog. Ko-fi's tip panel (an iframe) is only
+// added the first time it is opened, so nothing is requested from Ko-fi on page load.
+const support = $('support') as HTMLDialogElement;
+let panelLoaded = false;
+function openSupport() {
+  if (!panelLoaded) {
+    panelLoaded = true;
+    const f = document.createElement('iframe');
+    f.src = `${KOFI.replace(/\/+$/, '')}/?hidefeed=true&widget=true&embed=true&preview=true`;
+    f.title = 'Tip on Ko-fi'; f.loading = 'lazy'; f.height = '640';
+    $('support-panel').append(f);
+  }
+  if (!support.open) support.showModal();
+}
+function tipButton() { // Ko-fi's own button image, served from our domain
+  const b = el('button', { type: 'button', class: 'kofi-btn kofi-sm' });
+  b.setAttribute('aria-haspopup', 'dialog'); b.addEventListener('click', openSupport);
+  const img = new Image(91, 23);
+  img.src = '/kofi-button.png'; img.alt = 'Buy Me a Coffee'; img.loading = 'lazy';
+  b.append(img);
+  return b;
 }
 // About & FAQ: the text lives in index.html so search engines can read it without running the app.
 const about = $('about') as HTMLDialogElement;
@@ -287,21 +304,16 @@ setFooter(wideFooter.matches);
 footBtn.addEventListener('click', () => setFooter(!foot.classList.contains('open')));
 wideFooter.addEventListener('change', (e) => setFooter(e.matches));
 
-const footerTip = $('tip-footer');
 if (KOFI) {
-  // Ko-fi's own button, served from our domain, opens a small "support" dialog; Ko-fi is only contacted if they then click through
-  const support = $('support') as HTMLDialogElement;
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = 'kofi-btn'; b.setAttribute('aria-haspopup', 'dialog');
-  const img = new Image(145, 36);
-  img.src = '/kofi-button.png'; img.alt = 'Buy Me a Coffee at ko-fi.com'; img.loading = 'lazy';
-  b.append(img); footerTip.append(b);
-  b.addEventListener('click', () => support.showModal());
   support.addEventListener('click', (e) => { if (e.target === support) support.close(); });
-  ($('support-link') as HTMLAnchorElement).href = KOFI;
-} else { footerTip.hidden = true; }
-// About & FAQ: point the support link at Ko-fi, or leave the whole question out when no tip link is configured
-if (KOFI) ($('tip-about') as HTMLAnchorElement).href = KOFI; else $('support-faq').hidden = true;
+  ($('support-ext') as HTMLAnchorElement).href = KOFI;
+  const fab = $('tip-fab');
+  fab.hidden = false; fab.addEventListener('click', openSupport);
+  // About & FAQ: the link opens the support dialog (it still goes to Ko-fi if scripts are off)
+  const tipAbout = $('tip-about') as HTMLAnchorElement;
+  tipAbout.href = KOFI;
+  tipAbout.addEventListener('click', (e) => { e.preventDefault(); about.close(); openSupport(); });
+} else { $('support-faq').hidden = true; }
 
 const box = $('pc-result');
 function showResult(kind: '' | 'good' | 'bad', title: string, detail = '', extra?: Node) {
@@ -339,7 +351,7 @@ function checkArea(label: string, here: [number, number], radius: number /* mile
   } else {
     let tip: HTMLElement | undefined;
     if (KOFI) { // only in the all-clear case, never next to an outage
-      tip = el('span', { class: 'tip' }, 'Found this useful? ', tipLink('Buy me a coffee'), ' to help cover running costs.');
+      tip = el('span', { class: 'tip' }, 'Found this useful? ', tipButton());
     }
     showResult('good', `No reported power cuts near ${label}`, `${pc ? '' : `Checked within ${radius} miles of the centre. `}${callLine(country)}`, tip);
   }
