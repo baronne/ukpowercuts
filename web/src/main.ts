@@ -50,7 +50,7 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, props: Partial<HTMLEl
 // ---- map -------------------------------------------------------------------------------------
 const map = new maplibregl.Map({
   container: 'map', style: STYLE(isDark()), center: qAtOk ? [qAt[1]!, qAt[0]!] : [-2.5, 54.3], zoom: qAtOk ? Math.min(Math.max(qAt[2]!, 4), 16) : 5, minZoom: 4, maxZoom: 16,
-  attributionControl: { compact: true },
+  attributionControl: { compact: true, customAttribution: 'Areas: NESO, ONS' },
 });
 // keep the canvas in step with its container (layout shifts as the header wraps / fonts load)
 new ResizeObserver(() => map.resize()).observe($('map'));
@@ -92,7 +92,44 @@ function renderMap() {
   (map.getSource('areas') as maplibregl.GeoJSONSource | undefined)?.setData(g.areas);
 }
 
-map.on('style.load', () => { installLayers(); renderMap(); });
+// Network (DNO) areas: a small static file, fetched once after the map is up. Drawn under the outages so it never hides one.
+let dnoData: GeoJSON.FeatureCollection | undefined;
+function installDno() {
+  if (!dnoData || map.getSource('dno')) return;
+  const dark = isDark();
+  const label = ['match', ['get', 'network'], ...(Object.keys(SHORT) as DnoId[]).flatMap((id) => [id, SHORT[id]]), ''] as any;
+  map.addSource('dno', { type: 'geojson', data: dnoData });
+  const below = map.getLayer('areas-fill') ? 'areas-fill' : undefined;
+  map.addLayer({ id: 'dno-fill', type: 'fill', source: 'dno', filter: ['==', ['get', 'kind'], 'area'], paint: { 'fill-color': dark ? '#60a5fa' : '#2563eb', 'fill-opacity': 0 } }, below);
+  map.addLayer({ id: 'dno-border', type: 'line', source: 'dno', filter: ['==', ['get', 'kind'], 'border'], paint: { 'line-color': dark ? '#9ca3af' : '#6b7280', 'line-width': 1.4, 'line-opacity': 0.85, 'line-dasharray': [3, 2] } }, below);
+  map.addLayer({ id: 'dno-label', type: 'symbol', source: 'dno', maxzoom: 7.5, filter: ['==', ['get', 'kind'], 'label'], layout: { 'text-field': label, 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-letter-spacing': 0.08 }, paint: { 'text-color': dark ? '#d1d5db' : '#4b5563', 'text-halo-color': dark ? '#111827' : '#ffffff', 'text-halo-width': 1.5 } }, below);
+  updateDnoHighlight();
+}
+// Tint the area of the one network being looked at: the only network selected, or the chip being hovered
+let hoverDno: DnoId | null = null;
+function updateDnoHighlight() {
+  if (!map.getLayer('dno-fill')) return;
+  const ids = hoverDno ? [hoverDno] : state.dnos.size === 1 ? [...state.dnos] : [];
+  map.setPaintProperty('dno-fill', 'fill-opacity', ids.length ? ['case', ['in', ['get', 'network'], ['literal', ids]], isDark() ? 0.16 : 0.1, 0] : 0);
+}
+map.on('style.load', () => { installLayers(); installDno(); renderMap(); });
+map.once('load', () => {
+  fetch(`${API}/dno-areas.geojson`).then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { dnoData = d; if (map.isStyleLoaded() || map.getLayer('areas-fill')) installDno(); }).catch(() => { /* the map works fine without the areas */ });
+});
+
+// Tap an empty bit of the map to see who looks after that area (outages and clusters have their own handlers and win)
+map.on('click', (e) => {
+  const mine = ['clusters', 'outages'].filter((l) => map.getLayer(l));
+  if (mine.length && map.queryRenderedFeatures(e.point, { layers: mine }).length) return;
+  if (!map.getLayer('dno-fill')) return;
+  const id = map.queryRenderedFeatures(e.point, { layers: ['dno-fill'] })[0]?.properties?.network as DnoId | undefined;
+  if (!id || !(id in DNO_NAMES)) return;
+  popup?.remove();
+  const body = el('div', {}, el('h3', {}, FULL_NAME[id]), el('p', {}, REGION[id]),
+    el('p', {}, id === 'nie' ? 'Power cut? Call NIE Networks on 03457 643 643.' : 'Power cut? Call 105 (free).'),
+    el('p', { class: 'muted' }, 'Network boundaries are approximate.'));
+  popup = new maplibregl.Popup({ offset: 8 }).setLngLat(e.lngLat).setDOMContent(body).addTo(map);
+});
 const themeBtn = $('theme') as HTMLButtonElement;
 function syncThemeButton() {
   const label = isDark() ? 'Switch to light mode' : 'Switch to dark mode';
@@ -159,6 +196,7 @@ function renderChips() {
     b.setAttribute('aria-pressed', String(pressed));
     b.addEventListener('click', onClick);
     box.append(b);
+    return b;
   };
   chip('Unplanned', state.showUnplanned, 'sw-unplanned', () => { state.showUnplanned = !state.showUnplanned; refresh(); }, 'Unexpected power cuts\nClick to show or hide');
   chip('Planned work', state.showPlanned, 'sw-planned', () => { state.showPlanned = !state.showPlanned; refresh(); }, 'Scheduled maintenance\nClick to show or hide');
@@ -167,7 +205,10 @@ function renderChips() {
     const s = state.status[id];
     const cls = !s ? '' : s.stale ? 'stale' : s.ok ? 'ok' : '';
     const health = !s ? 'No data yet' : s.ok ? `Updated ${ago(s.fetchedAt)}` : /not configured/.test(s.error ?? '') ? 'Not connected yet' : `Feed unavailable, showing data from ${ago(s.fetchedAt)}`;
-    chip(SHORT[id], state.dnos.has(id), cls, () => { state.dnos.has(id) ? state.dnos.delete(id) : state.dnos.add(id); refresh(); }, `${FULL_NAME[id]}\n${REGION[id]}\n${health}`);
+    const b = chip(SHORT[id], state.dnos.has(id), cls, () => { state.dnos.has(id) ? state.dnos.delete(id) : state.dnos.add(id); refresh(); }, `${FULL_NAME[id]}\n${REGION[id]}\n${health}`);
+    const peek = (on: boolean) => { hoverDno = on ? id : null; updateDnoHighlight(); };
+    b.addEventListener('mouseenter', () => peek(true)); b.addEventListener('mouseleave', () => peek(false));
+    b.addEventListener('focus', () => peek(true)); b.addEventListener('blur', () => peek(false));
   }
 }
 
@@ -205,7 +246,7 @@ function setFreshness(kind: 'live' | 'stale' | 'replay' | 'error', text: string)
   $('updated').textContent = text;
 }
 
-function refresh() { renderChips(); renderMap(); renderList(); renderTotals(); }
+function refresh() { renderChips(); renderMap(); renderList(); renderTotals(); updateDnoHighlight(); }
 
 $('sheet-toggle').addEventListener('click', () => {
   const open = $('panel').classList.toggle('open');
