@@ -27,7 +27,7 @@ const NET = Object.fromEntries(NETWORKS.map((n) => [n.id, n])) as Record<DnoId, 
 
 interface Place { slug: string; name: string; nation: 'England' | 'Scotland' | 'Wales' | 'Northern Ireland'; lat: number; lon: number; r: number; net: DnoId }
 const PLACES: Place[] = [
-  { slug: 'london', name: 'London', nation: 'England', lat: 51.507, lon: -0.128, r: 30, net: 'ukpn' },
+  { slug: 'london', name: 'London', nation: 'England', lat: 51.507, lon: -0.128, r: 24, net: 'ukpn' },
   { slug: 'brighton', name: 'Brighton', nation: 'England', lat: 50.823, lon: -0.137, r: 15, net: 'ukpn' },
   { slug: 'norwich', name: 'Norwich', nation: 'England', lat: 52.63, lon: 1.297, r: 15, net: 'ukpn' },
   { slug: 'cambridge', name: 'Cambridge', nation: 'England', lat: 52.205, lon: 0.119, r: 15, net: 'ukpn' },
