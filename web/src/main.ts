@@ -14,13 +14,19 @@ const isDark = () => (savedTheme() ?? (darkMq.matches ? 'dark' : 'light')) === '
 interface Now { generatedAt: string; outages: Outage[]; status: Partial<Record<DnoId, DnoStatus>> }
 interface TimelinePoint { t: string; snap: string; customers: number; count: number }
 
+// Landing pages link here with ?network=ukpn or ?at=lat,lon,zoom
+const qs = new URLSearchParams(location.search);
+const qNet = qs.get('network') as DnoId | null;
+const qAt = (qs.get('at') ?? '').split(',').map(Number);
+const qAtOk = qAt.length === 3 && qAt.every(Number.isFinite) && Math.abs(qAt[0]!) <= 90 && Math.abs(qAt[1]!) <= 180;
+
 const state = {
   outages: [] as Outage[],
   status: {} as Now['status'],
   generatedAt: '',
   showUnplanned: true,
   showPlanned: true,
-  dnos: new Set<DnoId>(Object.keys(DNO_NAMES) as DnoId[]),
+  dnos: new Set<DnoId>(qNet && qNet in DNO_NAMES ? [qNet] : (Object.keys(DNO_NAMES) as DnoId[])),
   replay: false,
   timeline: [] as TimelinePoint[],
 };
@@ -42,7 +48,7 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, props: Partial<HTMLEl
 
 // ---- map -------------------------------------------------------------------------------------
 const map = new maplibregl.Map({
-  container: 'map', style: STYLE(isDark()), center: [-2.5, 54.3], zoom: 5, minZoom: 4, maxZoom: 16,
+  container: 'map', style: STYLE(isDark()), center: qAtOk ? [qAt[1]!, qAt[0]!] : [-2.5, 54.3], zoom: qAtOk ? Math.min(Math.max(qAt[2]!, 4), 16) : 5, minZoom: 4, maxZoom: 16,
   attributionControl: { compact: true },
 });
 // keep the canvas in step with its container (layout shifts as the header wraps / fonts load)
@@ -181,6 +187,13 @@ function renderTotals() {
   const live = visible().filter((o) => o.type === 'unplanned');
   $('t-customers').textContent = fmt.format(live.reduce((s, o) => s + (o.customers ?? 0), 0));
   $('t-count').textContent = fmt.format(live.length);
+  // a plain sentence (also useful to search engines): the figures above are only numbers
+  const line = $('live-line');
+  if (!state.replay && state.generatedAt) {
+    const all = state.outages.filter((o) => o.type === 'unplanned');
+    line.textContent = `Live now: ${fmt.format(all.reduce((s, o) => s + (o.customers ?? 0), 0))} customers without power in ${fmt.format(all.length)} power cuts across the UK, from ${Object.keys(DNO_NAMES).length} electricity networks.`;
+    line.hidden = false;
+  }
   const delayed = Object.values(state.status).filter((s) => s?.stale && !/not configured/.test(s.error ?? '')).length;
   setFreshness(state.replay ? 'replay' : delayed ? 'stale' : 'live',
     state.replay ? 'Replaying history' : state.generatedAt ? `Updated ${ago(state.generatedAt)}${delayed ? ` · ${delayed} feed${delayed > 1 ? 's' : ''} delayed` : ''}` : '');

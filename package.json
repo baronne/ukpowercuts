@@ -11,7 +11,7 @@
     "typecheck": "tsc -b --noEmit false || tsc --noEmit -p packages/core",
     "dev:worker": "npm run dev -w worker",
     "dev:web": "npm run dev -w web",
-    "build:web": "npm run build -w web",
+    "build:web": "npm run build -w web && tsx scripts/build-pages.ts",
     "deploy": "npm run build:web && npm run deploy -w worker"
   },
   "devDependencies": {

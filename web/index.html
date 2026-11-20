@@ -61,7 +61,8 @@
   </section>
   <footer>
     <p class="emergency"><span class="sos" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span><span><strong>Power cut? Call <a href="tel:105">105</a></strong>, free from any phone. Not an official source.</span></p>
-    <nav class="links" aria-label="About"><a href="https://github.com/baronne/ukpowercuts">Source code</a><button type="button" id="about-open" class="linklike">About &amp; FAQ</button><a href="https://github.com/baronne/ukpowercuts/issues/new/choose">Suggest a feature</a><span id="tip-footer"></span></nav>
+    <nav class="links" aria-label="About"><a href="https://github.com/baronne/ukpowercuts">Source code</a><a href="/power-cuts/">Power cuts by network &amp; city</a><button type="button" id="about-open" class="linklike">About &amp; FAQ</button><a href="https://github.com/baronne/ukpowercuts/issues/new/choose">Suggest a feature</a><span id="tip-footer"></span></nav>
+    <p class="live-line" id="live-line" hidden></p>
     <p class="credits">Data from UKPN, NGED, SSEN, SPEN, Northern Powergrid, ENWL and NIE Networks (very small faults may be missing). Postcodes via <a href="https://postcodes.io">postcodes.io</a>. MIT licensed.</p>
   </footer>
   <dialog id="about" aria-labelledby="about-title">
@@ -75,6 +76,8 @@
       <p>In England, Scotland and Wales call 105, free from any phone. In Northern Ireland call NIE Networks on 03457 643 643. If there is danger to life, such as fallen power lines, stay well away and call 999.</p>
       <h3>Which electricity network covers my area?</h3>
       <p>UK Power Networks: London, the South East and East of England. National Grid Electricity Distribution: the Midlands, South West England and South Wales. SSEN: the north of Scotland and central southern England. SP Energy Networks: central and southern Scotland, Merseyside, Cheshire and North Wales. Northern Powergrid: North East England and Yorkshire. Electricity North West: North West England. NIE Networks: Northern Ireland. Hover over or tap a network chip on the map to see its area.</p>
+      <h3>Power cuts by network</h3>
+      <p><a href="/power-cuts/ukpn/">UK Power Networks</a>, <a href="/power-cuts/nged/">National Grid Electricity Distribution</a>, <a href="/power-cuts/ssen/">SSEN</a>, <a href="/power-cuts/spen/">SP Energy Networks</a>, <a href="/power-cuts/northern-powergrid/">Northern Powergrid</a>, <a href="/power-cuts/enwl/">Electricity North West</a>, <a href="/power-cuts/nie-networks/">NIE Networks</a>. Or <a href="/power-cuts/">browse by city</a>.</p>
       <h3>How up to date is the map?</h3>
       <p>It reads every network's public power cut feed every 5 minutes. Networks can take a while to list a new fault, and very small faults may not appear.</p>
       <h3>Can I see power cuts from earlier in the week?</h3>
