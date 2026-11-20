@@ -289,11 +289,16 @@ wideFooter.addEventListener('change', (e) => setFooter(e.matches));
 
 const footerTip = $('tip-footer');
 if (KOFI) {
-  // Ko-fi's own button, served from our domain so visitors only contact Ko-fi if they click it
-  const a = tipLink(''); a.className = 'kofi-btn';
+  // Ko-fi's own button, served from our domain, opens a small "support" dialog; Ko-fi is only contacted if they then click through
+  const support = $('support') as HTMLDialogElement;
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'kofi-btn'; b.setAttribute('aria-haspopup', 'dialog');
   const img = new Image(145, 36);
   img.src = '/kofi-button.png'; img.alt = 'Buy Me a Coffee at ko-fi.com'; img.loading = 'lazy';
-  a.append(img); footerTip.append(a);
+  b.append(img); footerTip.append(b);
+  b.addEventListener('click', () => support.showModal());
+  support.addEventListener('click', (e) => { if (e.target === support) support.close(); });
+  ($('support-link') as HTMLAnchorElement).href = KOFI;
 } else { footerTip.hidden = true; }
 // About & FAQ: point the support link at Ko-fi, or leave the whole question out when no tip link is configured
 if (KOFI) ($('tip-about') as HTMLAnchorElement).href = KOFI; else $('support-faq').hidden = true;
