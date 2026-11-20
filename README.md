@@ -4,7 +4,9 @@ An open-source, single live map of power cuts across **every** UK electricity ne
 
 > Not an official source. If your power is off, call **105** (free; England, Scotland and Wales). In Northern Ireland call NIE Networks on **03457 643 643**.
 
-Free, no ads. If it's useful to you, you can [buy me a coffee](https://ko-fi.com/baronne) towards the running costs.
+Free, no ads. If it's useful to you, you can chip in towards the running costs:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R2U62AXSPZ)
 
 ## How it works
 
