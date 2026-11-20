@@ -1,6 +1,7 @@
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { DNO_NAMES, type DnoId, type DnoStatus, type Outage } from '../../packages/core/src/schema.ts';
+import { searchNiPlaces } from './ni-places.ts';
 
 const API = import.meta.env.VITE_API_BASE ?? '';
 // optional tip jar: only https links are accepted, and nothing is shown when unset
@@ -276,13 +277,14 @@ function checkArea(label: string, here: [number, number], radius: number /* mile
   }
 }
 
-interface PlaceHit { name_1: string; local_type: string; county_unitary: string | null; region: string | null; country: string; latitude: number; longitude: number; min_eastings?: number | null; max_eastings?: number | null; min_northings?: number | null; max_northings?: number | null }
+interface PlaceHit { name_1: string; local_type: string; county_unitary: string | null; region: string | null; country: string; latitude: number; longitude: number; min_eastings?: number | null; max_eastings?: number | null; min_northings?: number | null; max_northings?: number | null; miles?: number }
 const PLACE_RANK: Record<string, number> = { City: 0, Town: 1, 'Suburban Area': 2, Village: 3 };
 // Search radius in miles. Sized from the place's own bounding box (in metres, from postcodes.io) so a big city like London
 // isn't judged on a small circle: half the box's diagonal covers the whole built-up area. Never smaller than a floor for
-// the type of place, and never more than 15 miles, so an all-clear still means something. Places without a box (Northern Ireland) get the floor.
+// the type of place, and never more than 15 miles, so an all-clear still means something. Northern Ireland places come from our own list with a fixed radius.
 const MAX_MILES = 15;
 function placeRadius(p: PlaceHit) {
+  if (p.miles) return p.miles;
   const floor = p.local_type === 'City' ? 5 : p.local_type === 'Town' || p.local_type === 'Suburban Area' ? 3 : 2;
   const { min_eastings: e0, max_eastings: e1, min_northings: n0, max_northings: n1 } = p;
   if (e0 == null || e1 == null || n0 == null || n1 == null) return floor;
@@ -292,9 +294,15 @@ function placeRadius(p: PlaceHit) {
 const placeLabel = (p: PlaceHit) => `${p.name_1}${p.county_unitary && p.county_unitary !== p.name_1 ? `, ${p.county_unitary}` : ''}`;
 
 async function searchPlace(q: string) {
-  const res = await fetch(`https://api.postcodes.io/places?q=${encodeURIComponent(q)}&limit=10`);
-  const hits: PlaceHit[] = res.ok ? ((await res.json()).result ?? []) : [];
-  if (!hits.length) return showResult('bad', 'Place not found', 'Try a postcode, or the name of a town or city in Great Britain, e.g. Hexham. For Northern Ireland, use a postcode such as BT1 5GS.');
+  // Northern Ireland towns come from a small bundled list (postcodes.io's place search is Great Britain only)
+  const ni: PlaceHit[] = searchNiPlaces(q).map((p) => ({ name_1: p.name, local_type: p.type, county_unitary: p.county, region: null, country: 'Northern Ireland', latitude: p.lat, longitude: p.lon, miles: p.miles }));
+  let gb: PlaceHit[] = [];
+  try {
+    const res = await fetch(`https://api.postcodes.io/places?q=${encodeURIComponent(q)}&limit=10`);
+    if (res.ok) gb = (await res.json()).result ?? [];
+  } catch { /* offline or blocked: fall back to the Northern Ireland list */ }
+  const hits = [...ni, ...gb];
+  if (!hits.length) return showResult('bad', 'Place not found', 'Try a postcode, or the name of a town or city in the UK, e.g. Hexham or Omagh. Villages and neighbourhoods may need a postcode.');
   hits.sort((a, b) => (PLACE_RANK[a.local_type] ?? 9) - (PLACE_RANK[b.local_type] ?? 9));
   const go = (p: PlaceHit) => checkArea(placeLabel(p), [p.latitude, p.longitude], placeRadius(p), p.country);
   // one match, or a city/town that clearly outranks the rest: use it. Otherwise ask.
