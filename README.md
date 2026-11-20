@@ -36,6 +36,8 @@ Pull requests run typecheck, tests and a full build in GitHub Actions (`.github/
 | SPEN | Opendatasoft `national-energy-outage-data` (CC BY 4.0) | **free account** |
 | Electricity North West | Opendatasoft `live_incidents` (CC BY 4.0) | **free account** |
 
+Network areas (the dashed lines and tap-to-identify) come from NESO's "GIS Boundaries for GB DNO Licence Areas" (NESO Open Data Licence; "Supported by National Energy SO Open Data"), merged into the seven networks, plus Northern Ireland's outline from the ONS "Countries (December 2024) Boundaries UK BUC" (OGL v3.0; contains OS data © Crown copyright and database right 2024). They are simplified and approximate. The result is committed as `web/public/dno-areas.geojson`; to refresh it when NESO publishes a newer file, download both GeoJSON files and run `scripts/build-dno-areas.sh <neso.geojson> <ons-countries.geojson>` (needs `npx` and `python3`).
+
 Known limits: UKPN and ENWL omit very small faults; SPEN publishes no customer counts; SSEN and NIE state no licence, so they are shown live with attribution but left out of the bulk daily exports (`EXPORT_EXCLUDE`) until confirmed.
 
 ## Deploy (Cloudflare)
