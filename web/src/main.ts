@@ -273,6 +273,20 @@ const about = $('about') as HTMLDialogElement;
 $('about-open').addEventListener('click', () => about.showModal());
 about.addEventListener('click', (e) => { if (e.target === about) about.close(); }); // click on the backdrop closes it
 
+// footer: who-to-call is always shown; the rest sits behind a "More" handle, open by default only on wide screens
+const foot = document.querySelector('footer')!;
+const footBtn = $('foot-toggle');
+const wideFooter = matchMedia('(min-width: 860px)');
+function setFooter(open: boolean) {
+  foot.classList.toggle('open', open);
+  footBtn.setAttribute('aria-expanded', String(open));
+  footBtn.querySelector('.ft-label')!.textContent = open ? 'Less' : 'More';
+  footBtn.setAttribute('aria-label', open ? 'Hide links and credits' : 'Show links and credits');
+}
+setFooter(wideFooter.matches);
+footBtn.addEventListener('click', () => setFooter(!foot.classList.contains('open')));
+wideFooter.addEventListener('change', (e) => setFooter(e.matches));
+
 const footerTip = $('tip-footer');
 if (KOFI) { footerTip.append(tipLink('☕ Buy me a coffee')); } else { footerTip.hidden = true; }
 // About & FAQ: point the support link at Ko-fi, or leave the whole question out when no tip link is configured
