@@ -275,6 +275,8 @@ about.addEventListener('click', (e) => { if (e.target === about) about.close(); 
 
 const footerTip = $('tip-footer');
 if (KOFI) { footerTip.append(tipLink('☕ Buy me a coffee')); } else { footerTip.hidden = true; }
+// About & FAQ: point the support link at Ko-fi, or leave the whole question out when no tip link is configured
+if (KOFI) ($('tip-about') as HTMLAnchorElement).href = KOFI; else $('support-faq').hidden = true;
 
 const box = $('pc-result');
 function showResult(kind: '' | 'good' | 'bad', title: string, detail = '', extra?: Node) {
