@@ -288,7 +288,13 @@ footBtn.addEventListener('click', () => setFooter(!foot.classList.contains('open
 wideFooter.addEventListener('change', (e) => setFooter(e.matches));
 
 const footerTip = $('tip-footer');
-if (KOFI) { footerTip.append(tipLink('☕ Buy me a coffee')); } else { footerTip.hidden = true; }
+if (KOFI) {
+  // Ko-fi's own button, served from our domain so visitors only contact Ko-fi if they click it
+  const a = tipLink(''); a.className = 'kofi-btn';
+  const img = new Image(145, 36);
+  img.src = '/kofi-button.png'; img.alt = 'Buy Me a Coffee at ko-fi.com'; img.loading = 'lazy';
+  a.append(img); footerTip.append(a);
+} else { footerTip.hidden = true; }
 // About & FAQ: point the support link at Ko-fi, or leave the whole question out when no tip link is configured
 if (KOFI) ($('tip-about') as HTMLAnchorElement).href = KOFI; else $('support-faq').hidden = true;
 
