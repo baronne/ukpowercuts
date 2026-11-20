@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping improve the map. **If your power is off right now, call 105.** We can't fix live faults.
+        Thanks for helping improve the map. **If your power is off right now, call 105** (in Northern Ireland, NIE Networks on 03457 643 643). We can't fix live faults.
   - type: dropdown
     id: kind
     attributes:
