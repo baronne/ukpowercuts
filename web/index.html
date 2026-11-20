@@ -51,10 +51,6 @@
   <main>
     <div id="map" aria-label="Map of UK power cuts"></div>
     <button id="sheet-toggle" aria-expanded="false">List</button>
-    <button id="tip-fab" type="button" class="tip-fab" aria-haspopup="dialog" hidden>
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v7a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z"/><path d="M7 1v3M11 1v3M15 1v3"/></svg>
-      <span>Tip me</span>
-    </button>
     <aside id="panel" aria-label="Outage list"><ol id="list"></ol></aside>
   </main>
   <section id="replay" aria-label="History replay">
@@ -72,7 +68,7 @@
       <a class="num" href="tel:03457643643"><span class="num-n">03457 643 643</span><span class="num-l">Northern Ireland (NIE)</span></a>
     </div>
     <div class="foot-more" id="foot-more">
-    <nav class="links" aria-label="About"><a href="https://github.com/baronne/ukpowercuts">Source code</a><a href="/power-cuts/">Power cuts by network &amp; city</a><button type="button" id="about-open" class="linklike">About &amp; FAQ</button><a href="/privacy/">Privacy &amp; cookies</a><a href="https://github.com/baronne/ukpowercuts/issues/new?template=1-bug-report.yml" target="_blank" rel="noopener">Report a bug</a><a href="https://github.com/baronne/ukpowercuts/issues/new?template=2-feature-request.yml" target="_blank" rel="noopener">Request a feature</a></nav>
+    <nav class="links" aria-label="About"><a href="https://github.com/baronne/ukpowercuts">Source code</a><a href="/power-cuts/">Power cuts by network &amp; city</a><button type="button" id="about-open" class="linklike">About &amp; FAQ</button><a href="/privacy/">Privacy &amp; cookies</a><a href="https://github.com/baronne/ukpowercuts/issues/new?template=1-bug-report.yml" target="_blank" rel="noopener">Report a bug</a><a href="https://github.com/baronne/ukpowercuts/issues/new?template=2-feature-request.yml" target="_blank" rel="noopener">Request a feature</a><span id="tip-footer"></span></nav>
       <div class="foot-small">
         <p class="live-line" id="live-line" hidden></p>
         <p class="credits">An independent project, not an official source. Data from UKPN, NGED, SSEN, SPEN, Northern Powergrid, ENWL and NIE Networks (very small faults may be missing). Network areas: <a href="https://www.neso.energy/data-portal">Supported by National Energy SO Open Data</a>, plus Northern Ireland's outline from ONS (contains OS data © Crown copyright and database right 2024, <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">OGL v3.0</a>); approximate. Postcodes via <a href="https://postcodes.io">postcodes.io</a>. MIT licensed.</p>
