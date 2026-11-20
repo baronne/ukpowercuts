@@ -171,7 +171,7 @@ ${live}
 <h1>${esc(p.h1)}</h1>
 ${p.body}
 </main>
-<footer>UK Power Cuts is an independent, open-source project and is not run by any electricity network. Data comes from each network&rsquo;s own published feed and very small faults may be missing. <a href="/">Live map</a> &middot; <a href="${BASE}">All networks and cities</a> &middot; <a href="https://github.com/baronne/ukpowercuts">Source code</a></footer>
+<footer>UK Power Cuts is an independent, open-source project and is not run by any electricity network. Data comes from each network&rsquo;s own published feed and very small faults may be missing. <a href="/">Live map</a> &middot; <a href="${BASE}">All networks and cities</a> &middot; <a href="/privacy/">Privacy &amp; cookies</a> &middot; <a href="https://github.com/baronne/ukpowercuts">Source code</a></footer>
 ${p.live ? `<script>${LIVE_JS}</script>` : ''}
 </body>
 </html>
@@ -266,6 +266,40 @@ ${nations.map((nation) => {
 ${ADVICE}`,
 });
 
+// Privacy and cookies. Kept out of the sitemap: it matters for trust and compliance, not for search traffic.
+// If you add analytics, ads, or anything that sets a cookie or reads the device, update this page AND ask for consent first.
+const PRIVACY_PATH = '/privacy/';
+const privacy: Page = {
+  path: PRIVACY_PATH,
+  title: 'Privacy and cookies | UK Power Cuts',
+  description: 'UK Power Cuts sets no cookies and has no analytics, ads or accounts. What your browser sends to the services the map uses.',
+  h1: 'Privacy and cookies',
+  crumbs: [['Home', '/'], ['Privacy and cookies', PRIVACY_PATH]],
+  mapHref: '/',
+  body: `<p class="muted">Last updated 20 November 2026.</p>
+<p><strong>In short: this site sets no cookies, has no analytics, no advertising and no accounts, and doesn&rsquo;t collect your name, email address or location.</strong> That is why there is no cookie banner: the law (PECR and UK GDPR) only requires consent for cookies and similar technology that aren&rsquo;t strictly needed, and we don&rsquo;t use any.</p>
+<h2>Cookies and storage on your device</h2>
+<ul class="tidy">
+<li><strong>Cookies:</strong> none.</li>
+<li><strong>Local storage:</strong> if you press the light/dark switch, your choice (the word &ldquo;light&rdquo; or &ldquo;dark&rdquo;) is saved in your browser so the site looks the same next time. It stays on your device, is never sent to us, and you can remove it by clearing this site&rsquo;s data. If you never press the switch, nothing is stored.</li>
+</ul>
+<h2>What is sent to other services</h2>
+<p>This is an independent project run by one person, not a company. We don&rsquo;t run a server that records visitors, but your browser talks to a few services in order to show the map:</p>
+<ul class="tidy">
+<li><strong>Cloudflare</strong> hosts the site. Like any web host it processes technical request details, such as your IP address, to deliver the pages and protect them from abuse.</li>
+<li><strong><a href="https://openfreemap.org">OpenFreeMap</a></strong> supplies the map tiles. Loading the map sends your IP address and the area you are viewing to them, as with any online map.</li>
+<li><strong><a href="https://postcodes.io">postcodes.io</a></strong> turns a postcode or place name into a location. When you search, what you type goes from your browser straight to them. It does not pass through us, and we never see or store it. The check for power cuts nearby then happens in your browser.</li>
+<li><strong>Links</strong> to GitHub or Ko-fi only connect to those sites if you click them, and their own privacy policies apply from then on.</li>
+</ul>
+<p>None of these is used by us for advertising or tracking, and we don&rsquo;t sell or share data. The outage figures come from the electricity networks&rsquo; own published feeds and contain no personal information.</p>
+<h2>If this changes</h2>
+<p>If we ever add analytics, ads or anything else that needs your consent, we will ask first and update this page.</p>
+<h2>Questions</h2>
+<p>Open an issue on <a href="https://github.com/baronne/ukpowercuts/issues">GitHub</a>. This page is plain-English information, not legal advice.</p>`,
+};
+mkdirSync(join(DIST, PRIVACY_PATH), { recursive: true });
+writeFileSync(join(DIST, PRIVACY_PATH, 'index.html'), render(privacy));
+
 const today = new Date().toISOString().slice(0, 10);
 for (const p of pages) {
   const dir = join(DIST, p.path);
@@ -278,4 +312,4 @@ writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 ${urls.map((u) => `  <url><loc>${SITE}${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.pri}</priority></url>`).join('\n')}
 </urlset>
 `);
-console.log(`Wrote ${pages.length} pages and a ${urls.length}-URL sitemap to web/dist`);
+console.log(`Wrote ${pages.length + 1} pages and a ${urls.length}-URL sitemap to web/dist`);
