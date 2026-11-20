@@ -2,7 +2,7 @@
 
 An open-source, single live map of power cuts across **every** UK electricity network (UKPN, NGED, SSEN, SPEN, Northern Powergrid, Electricity North West, NIE Networks), with 7 days of history: **[ukpowercuts.uk](https://ukpowercuts.uk)**. Born from a thread on r/UKPreppers asking for exactly this.
 
-> Not an official source. If your power is off, call **105** (free).
+> Not an official source. If your power is off, call **105** (free; England, Scotland and Wales). In Northern Ireland call NIE Networks on **03457 643 643**.
 
 Free, no ads. If it's useful to you, you can [buy me a coffee](https://ko-fi.com/baronne) towards the running costs.
 
