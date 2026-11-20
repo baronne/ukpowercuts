@@ -22,6 +22,8 @@ npm run dev:worker       # Worker on :8787  (then: curl localhost:8787/__poll)
 npm run dev:web          # map on :5173, proxies /api to the Worker
 ```
 
+Pull requests run typecheck, tests and a full build in GitHub Actions (`.github/workflows/ci.yml`); it never deploys and uses no secrets.
+
 ## Data sources
 
 | Network | Source | Key |
